@@ -1,0 +1,85 @@
+import 'dart:convert';
+
+import 'package:http/http.dart';
+import 'package:just_travel/models/db-models/user_model.dart';
+
+import '../utils/constants/urls.dart';
+
+class UserApi{
+
+  //create user
+  static Future<UserModel?> createUser(UserModel user) async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = Request('POST', Uri.parse('${baseUrl}users/create'));
+    request.body = json.encode(user);
+    request.headers.addAll(headers);
+
+    try{
+      StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var enCodedDate = await response.stream.bytesToString();
+        var data = json.decode(enCodedDate);
+        UserModel user = UserModel.fromJson(data);
+        print('create user: $user');
+        return user;
+      }
+      else {
+        throw Error();
+      }
+    }catch(error){
+      print('create user error: $error');
+      return null;
+    }
+
+
+
+  }
+
+
+
+  // fetching user by email
+  static Future<UserModel?> fetchUserByEmail(String email) async {
+
+    try{
+
+      var request = Request('GET', Uri.parse('${baseUrl}users/email/?email=$email'));
+
+
+      StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+      }
+      else {
+        print(response.reasonPhrase);
+      }
+
+
+
+
+
+
+      // var request = Request('GET', Uri.parse('${baseUrl}users/email/?email=$email'));
+      // StreamedResponse response = await request.send();
+      //
+      // if (response.statusCode == 200) {
+      //   var enCodedDate = await response.stream.bytesToString();
+      //   var data = json.decode(enCodedDate);
+      //   UserModel user = UserModel.fromJson(data);
+      //   print('userApi: $user');
+      //   return user;
+      // }
+    }catch(error){
+      print('user error: $error');
+      return null;
+    }
+
+    return null;
+
+
+
+  }
+}
