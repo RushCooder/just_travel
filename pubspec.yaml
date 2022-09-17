@@ -46,6 +46,7 @@ dependencies:
   persistent_bottom_nav_bar: ^4.0.2
   animations: ^2.0.3
   google_sign_in: ^5.4.1
+  pin_code_fields: ^7.4.0
 
 dev_dependencies:
   flutter_test:

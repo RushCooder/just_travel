@@ -32,9 +32,10 @@ class CustomFormField extends StatelessWidget {
         maxLines: maxLine,
         keyboardType: textInputType,
         decoration: InputDecoration(
-          border: InputBorder.none,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           filled: true,
-
 
           labelText: labelText,
           prefixIcon: isPrefIcon ? Icon(icon) : null,

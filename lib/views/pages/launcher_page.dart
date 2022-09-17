@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:just_travel/views/pages/home_page.dart';
+import 'package:just_travel/providers/user_provider.dart';
+import 'package:just_travel/views/pages/home_page/home_page.dart';
 import 'package:just_travel/views/pages/signin_page.dart';
 import 'package:provider/provider.dart';
 
@@ -19,24 +20,29 @@ class _LauncherPageState extends State<LauncherPage> {
     // TODO: implement initState
     super.initState();
 
-    AuthProvider authProvider =
-        Provider.of<AuthProvider>(context, listen: false);
+    AuthProvider authProvider = context.read<AuthProvider>();
+
+    UserProvider userProvider = context.read<UserProvider>();
 
     Future.delayed(
       Duration.zero,
       () {
-
         // Navigator.pushNamedAndRemoveUntil(
         //           context, HomePage.routeName, (route) => false);
-
 
         //TODO: fix routing and authentication
         print('launcher page is deciding');
         print('current user: ${authProvider.getCurrentUser()}');
         if (authProvider.getCurrentUser() != null) {
-
-          Navigator.pushNamedAndRemoveUntil(
-              context, HomePage.routeName, (route) => false);
+         try {
+            userProvider
+                .fetchUserByEmail(authProvider.getCurrentUser()!.email!);
+            Navigator.pushNamedAndRemoveUntil(
+                context, HomePage.routeName, (route) => false);
+          }
+          catch(error){
+           print('error at launcher page: $error');
+          }
         } else {
           Navigator.pushNamedAndRemoveUntil(
               context, SignInPage.routeName, (route) => false);

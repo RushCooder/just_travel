@@ -13,25 +13,31 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: GestureDetector(
-        onTap: () async {
-           context.read<AuthProvider>().signOut().then((value) {
-             print('signout');
-             Navigator.pushNamedAndRemoveUntil(context,
-                 LauncherPage.routeName, (route) => false);
-           });
-          // await context.read<UserProvider>().fetchUserByEmail('tariqulislamkst9923@gmail.com');
-          // print(context.read<UserProvider>().user);
-        },
-        child: CircleAvatar(
-          radius: 20,
-          backgroundColor: Colors.grey.withOpacity(0.3),
-          child: const Padding(
-            padding:  EdgeInsets.all(8.0),
-            child: Center(
-              child: Icon(
-                Icons.menu,
-                color: Colors.black87,
+      leading: Builder(
+        builder:(context) =>  GestureDetector(
+          onTap: () async {
+            Scaffold.of(context).openDrawer();
+            // await AuthService.reload;
+            // print(AuthService.user);
+
+             // context.read<AuthProvider>().signOut().then((value) {
+             //   print('signout');
+             //   Navigator.pushNamedAndRemoveUntil(context,
+             //       LauncherPage.routeName, (route) => false);
+             // });
+            // await context.read<UserProvider>().fetchUserByEmail('tariqulislamkst9923@gmail.com');
+            // print(context.read<UserProvider>().user);
+          },
+          child: CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.grey.withOpacity(0.3),
+            child: const Padding(
+              padding:  EdgeInsets.all(8.0),
+              child: Center(
+                child: Icon(
+                  Icons.menu,
+                  color: Colors.black87,
+                ),
               ),
             ),
           ),

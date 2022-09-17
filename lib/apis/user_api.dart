@@ -5,18 +5,15 @@ import 'package:just_travel/models/db-models/user_model.dart';
 
 import '../utils/constants/urls.dart';
 
-class UserApi{
-
+class UserApi {
   //create user
   static Future<UserModel?> createUser(UserModel user) async {
-    var headers = {
-      'Content-Type': 'application/json'
-    };
+    var headers = {'Content-Type': 'application/json'};
     var request = Request('POST', Uri.parse('${baseUrl}users/create'));
     request.body = json.encode(user);
     request.headers.addAll(headers);
 
-    try{
+    try {
       StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
@@ -25,61 +22,34 @@ class UserApi{
         UserModel user = UserModel.fromJson(data);
         print('create user: $user');
         return user;
-      }
-      else {
+      } else {
         throw Error();
       }
-    }catch(error){
+    } catch (error) {
       print('create user error: $error');
       return null;
     }
-
-
-
   }
-
-
 
   // fetching user by email
   static Future<UserModel?> fetchUserByEmail(String email) async {
-
-    try{
-
-      var request = Request('GET', Uri.parse('${baseUrl}users/email/?email=$email'));
-
+    try {
+      var request =
+          Request('GET', Uri.parse('${baseUrl}users/email/?email=$email'));
 
       StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
-        print(await response.stream.bytesToString());
+        var enCodedDate = await response.stream.bytesToString();
+        var data = json.decode(enCodedDate);
+        UserModel user = UserModel.fromJson(data);
+        return user;
+      } else {
+        throw response.reasonPhrase.toString();
       }
-      else {
-        print(response.reasonPhrase);
-      }
-
-
-
-
-
-
-      // var request = Request('GET', Uri.parse('${baseUrl}users/email/?email=$email'));
-      // StreamedResponse response = await request.send();
-      //
-      // if (response.statusCode == 200) {
-      //   var enCodedDate = await response.stream.bytesToString();
-      //   var data = json.decode(enCodedDate);
-      //   UserModel user = UserModel.fromJson(data);
-      //   print('userApi: $user');
-      //   return user;
-      // }
-    }catch(error){
+    } catch (error) {
       print('user error: $error');
       return null;
     }
-
-    return null;
-
-
-
   }
 }
