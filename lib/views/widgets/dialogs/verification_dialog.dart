@@ -26,8 +26,8 @@ void verificationDialog(BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Consumer<AuthProvider>(
-                  builder: (context, authProvider, child) =>
-                      Text('Resend email in ${authProvider.emailResendTime} seconds')),
+                  builder: (context, authProvider, child) => Text(
+                      'Resend email in ${authProvider.emailResendTime} seconds')),
             ],
           ),
         ],
@@ -35,10 +35,12 @@ void verificationDialog(BuildContext context) {
       actions: [
         Consumer<AuthProvider>(
           builder: (context, authProvider, child) => ElevatedButton(
-            onPressed: authProvider.emailResendTime == 0 ? () async {
-              authProvider.resetTimerValue();
-              await authProvider.reSendVerificationEmail();
-            } : null,
+            onPressed: authProvider.emailResendTime == 0
+                ? () async {
+                    authProvider.resetTimerValue();
+                    await authProvider.reSendVerificationEmail();
+                  }
+                : null,
             child: const Text('Resend Email'),
           ),
         )

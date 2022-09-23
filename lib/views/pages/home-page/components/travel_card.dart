@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../widgets/app_text.dart';
 
-
-
 class TravelCard extends StatelessWidget {
   final String title;
   final String location;

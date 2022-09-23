@@ -36,10 +36,8 @@ class CustomFormField extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
           ),
           filled: true,
-
           labelText: labelText,
           prefixIcon: isPrefIcon ? Icon(icon) : null,
-
           suffixIcon: isPassword
               ? IconButton(
                   onPressed: authProvider.changeVisibility,
@@ -56,9 +54,7 @@ class CustomFormField extends StatelessWidget {
           }
           return null;
         },
-
         onEditingComplete: onEditingComplete,
-
       ),
     );
   }

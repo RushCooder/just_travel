@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/user_provider.dart';
-import 'package:just_travel/views/pages/home_page/home_page.dart';
-import 'package:just_travel/views/pages/signin_page.dart';
+import 'package:just_travel/views/pages/auth/signin/signin_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/auth_provider.dart';
+import 'home-page/home_page.dart';
 
 class LauncherPage extends StatefulWidget {
   static const routeName = '/';
@@ -34,14 +34,13 @@ class _LauncherPageState extends State<LauncherPage> {
         print('launcher page is deciding');
         print('current user: ${authProvider.getCurrentUser()}');
         if (authProvider.getCurrentUser() != null) {
-         try {
+          try {
             userProvider
                 .fetchUserByEmail(authProvider.getCurrentUser()!.email!);
             Navigator.pushNamedAndRemoveUntil(
                 context, HomePage.routeName, (route) => false);
-          }
-          catch(error){
-           print('error at launcher page: $error');
+          } catch (error) {
+            print('error at launcher page: $error');
           }
         } else {
           Navigator.pushNamedAndRemoveUntil(

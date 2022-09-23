@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
-import 'package:just_travel/providers/user_provider.dart';
-import 'package:just_travel/services/auth/auth_service.dart';
-import 'package:just_travel/views/pages/signin_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../pages/launcher_page.dart';
@@ -15,11 +12,11 @@ class CustomAppBar extends StatelessWidget {
     return ListTile(
       leading: GestureDetector(
         onTap: () async {
-           context.read<AuthProvider>().signOut().then((value) {
-             print('signout');
-             Navigator.pushNamedAndRemoveUntil(context,
-                 LauncherPage.routeName, (route) => false);
-           });
+          context.read<AuthProvider>().signOut().then((value) {
+            print('signout');
+            Navigator.pushNamedAndRemoveUntil(
+                context, LauncherPage.routeName, (route) => false);
+          });
           // await context.read<UserProvider>().fetchUserByEmail('tariqulislamkst9923@gmail.com');
           // print(context.read<UserProvider>().user);
         },
@@ -27,7 +24,7 @@ class CustomAppBar extends StatelessWidget {
           radius: 20,
           backgroundColor: Colors.grey.withOpacity(0.3),
           child: const Padding(
-            padding:  EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: Center(
               child: Icon(
                 Icons.menu,

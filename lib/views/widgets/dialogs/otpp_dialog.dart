@@ -50,19 +50,18 @@ void showOtpDialog(BuildContext context, String vId) {
           controller: codeController,
           onCompleted: (v) async {
             print("Completed");
-            try{
-              bool otpVerified = await provider.matchingSmsCode(vId, codeController.text);
-              if (otpVerified){
-                Navigator.pushNamedAndRemoveUntil(context, LauncherPage.routeName, (route) => false);
-              }
-              else{
+            try {
+              bool otpVerified =
+                  await provider.matchingSmsCode(vId, codeController.text);
+              if (otpVerified) {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, LauncherPage.routeName, (route) => false);
+              } else {
                 showMsg(context, 'Wrong OTP');
               }
-
-            }catch(error){
+            } catch (error) {
               print('otpDialog error: $error');
             }
-
           },
           onChanged: (value) {
             print('onchanged: $value');

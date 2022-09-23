@@ -1,95 +1,100 @@
 class UserModel {
   UserModel({
-    this.name,
     this.email,
     this.mobile,
+    this.id,
+    this.name,
     this.city,
     this.division,
     this.profileImage,
     this.coverImage,
     this.uploadImages,
-    this.id,
+    this.trips,
     this.createdAt,
     this.updatedAt,
     this.v,
   });
 
-
   @override
   String toString() {
-    return 'UserModel{name: $name, email: $email, mobile: $mobile, city: $city, division: $division, profileImage: $profileImage, coverImage: $coverImage, uploadImages: $uploadImages, id: $id, createdAt: $createdAt, updatedAt: $updatedAt, v: $v}';
+    return 'UserModel{email: $email, mobile: $mobile, id: $id, name: $name, city: $city, division: $division, profileImage: $profileImage, coverImage: $coverImage, uploadImages: $uploadImages, trips: $trips, createdAt: $createdAt, updatedAt: $updatedAt, v: $v}';
   }
 
   UserModel.fromJson(dynamic json) {
-    name = json['name'];
     email = json['email'] != null ? Email.fromJson(json['email']) : null;
     mobile = json['mobile'] != null ? Mobile.fromJson(json['mobile']) : null;
+    id = json['_id'];
+    name = json['name'];
     city = json['city'];
     division = json['division'];
     profileImage = json['profileImage'];
     coverImage = json['coverImage'];
     uploadImages =
         json['uploadImages'] != null ? json['uploadImages'].cast<String>() : [];
-    id = json['_id'];
+    trips = json['trips'] != null ? json['trips'].cast<String>() : [];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     v = json['__v'];
   }
-  String? name;
   Email? email;
   Mobile? mobile;
+  String? id;
+  String? name;
   String? city;
   String? division;
   String? profileImage;
   String? coverImage;
   List<String>? uploadImages;
-  String? id;
+  List<String>? trips;
   String? createdAt;
   String? updatedAt;
   num? v;
   UserModel copyWith({
-    String? name,
     Email? email,
     Mobile? mobile,
+    String? id,
+    String? name,
     String? city,
     String? division,
     String? profileImage,
     String? coverImage,
     List<String>? uploadImages,
-    String? id,
+    List<String>? trips,
     String? createdAt,
     String? updatedAt,
     num? v,
   }) =>
       UserModel(
-        name: name ?? this.name,
         email: email ?? this.email,
         mobile: mobile ?? this.mobile,
+        id: id ?? this.id,
+        name: name ?? this.name,
         city: city ?? this.city,
         division: division ?? this.division,
         profileImage: profileImage ?? this.profileImage,
         coverImage: coverImage ?? this.coverImage,
         uploadImages: uploadImages ?? this.uploadImages,
-        id: id ?? this.id,
+        trips: trips ?? this.trips,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         v: v ?? this.v,
       );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['name'] = name;
     if (email != null) {
       map['email'] = email?.toJson();
     }
     if (mobile != null) {
       map['mobile'] = mobile?.toJson();
     }
+    map['_id'] = id;
+    map['name'] = name;
     map['city'] = city;
     map['division'] = division;
     map['profileImage'] = profileImage;
     map['coverImage'] = coverImage;
     map['uploadImages'] = uploadImages;
-    map['_id'] = id;
+    map['trips'] = trips;
     map['createdAt'] = createdAt;
     map['updatedAt'] = updatedAt;
     map['__v'] = v;
@@ -102,12 +107,6 @@ class Mobile {
     this.number,
     this.isVerified,
   });
-
-
-  @override
-  String toString() {
-    return 'Mobile{number: $number, isVerified: $isVerified}';
-  }
 
   Mobile.fromJson(dynamic json) {
     number = json['number'];
@@ -136,12 +135,6 @@ class Email {
     this.emailId,
     this.isVerified,
   });
-
-
-  @override
-  String toString() {
-    return 'Email{emailId: $emailId, isVerified: $isVerified}';
-  }
 
   Email.fromJson(dynamic json) {
     emailId = json['emailId'];

@@ -6,9 +6,9 @@ import 'package:provider/provider.dart';
 import '../widgets/bottom_navbar/navbar_items.dart';
 import '../widgets/bottom_navbar/screens.dart';
 
-class HomePage extends StatelessWidget {
-  static const String routeName = '/home';
-  const HomePage({Key? key}) : super(key: key);
+class HomePageBottomBar extends StatelessWidget {
+  static const String routeName = '/home_bottom_bar';
+  const HomePageBottomBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
     _controller = PersistentTabController(initialIndex: 0);
 
     return Consumer<AuthProvider>(
-      builder: (context, value, child) =>  PersistentTabView(
+      builder: (context, value, child) => PersistentTabView(
         context,
         controller: _controller,
         screens: screens(),
@@ -48,8 +48,8 @@ class HomePage extends StatelessWidget {
           duration: Duration(milliseconds: 200),
         ),
 
-        navBarStyle:
-            NavBarStyle.style1, //// Choose the nav bar style with this property.
+        navBarStyle: NavBarStyle
+            .style1, //// Choose the nav bar style with this property.
       ),
     );
   }

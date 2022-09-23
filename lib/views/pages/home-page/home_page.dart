@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:just_travel/views/pages/home_page/components/user_drawer.dart';
+import 'package:just_travel/utils/theme/status_bar_theme.dart';
+import 'package:just_travel/views/pages/home-page/components/app_bar_trailing.dart';
+import 'package:just_travel/views/pages/home-page/components/drawer_button.dart';
 import 'package:just_travel/views/screens/home_screen/components/upcoming_trip.dart';
-import 'package:provider/provider.dart';
-import '../../../providers/user_provider.dart';
-import '../../../services/auth/auth_service.dart';
+import 'package:just_travel/views/widgets/appbar_layout.dart';
 import '../../widgets/app_text.dart';
 import 'components/custom_app_bar.dart';
 import 'components/search_bar.dart';
+import 'components/user_drawer.dart';
 
 class HomePage extends StatelessWidget {
   static const String routeName = '/home';
@@ -17,15 +18,25 @@ class HomePage extends StatelessWidget {
     // context.read<UserProvider>().fetchUserByEmail(AuthService.user!.email!);
 
     return Scaffold(
+      // extendBodyBehindAppBar: true,
+      // TODO: Drawer will be added
       drawer: const UserDrawer(),
+      appBar: appbarLayout(
+          leading: const DrawerButton(),
+          title: 'Home',
+          iconTheme: Theme.of(context).iconTheme,
+          textStyle: Theme.of(context).textTheme.headline6,
+          actions: [
+            const AppBarTrailing(),
+          ]),
       body: SafeArea(
         child: ListView(
           children: [
             //Appbar
-            const CustomAppBar(),
-            const SizedBox(
-              height: 15,
-            ),
+            // const CustomAppBar(),
+            // const SizedBox(
+            //   height: 15,
+            // ),
             //Search options
             const SearchBar(),
             const SizedBox(

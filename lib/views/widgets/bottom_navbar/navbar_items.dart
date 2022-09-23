@@ -14,7 +14,6 @@ List<PersistentBottomNavBarItem> navBarsItems() {
       routeAndNavigatorSettings: const RouteAndNavigatorSettings(
         initialRoute: LauncherPage.routeName,
         onGenerateRoute: RouteGenerator.onGenerateRoute,
-
       ),
     ),
     PersistentBottomNavBarItem(

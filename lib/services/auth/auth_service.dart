@@ -11,7 +11,7 @@ class AuthService {
   static Future<void> get reload => _auth.currentUser!.reload();
 
   // checking isVerified
-  static Future<bool> checkIsVerified () async {
+  static Future<bool> checkIsVerified() async {
     await reload;
     return user!.emailVerified;
   }
@@ -38,9 +38,8 @@ class AuthService {
   // SignUp user with email verification
   static Future<bool> emailVerification() async {
     try {
-
-        await user!.sendEmailVerification();
-        print('verificaiton email sent');
+      await user!.sendEmailVerification();
+      print('verificaiton email sent');
 
       return true;
     } catch (error) {
@@ -52,8 +51,8 @@ class AuthService {
   }
 
   // phone number verification
-  static Future<void> verifyPhoneNumber(String phoneNumber, Function(String vId) codeSent) async {
-
+  static Future<void> verifyPhoneNumber(
+      String phoneNumber, Function(String vId) codeSent) async {
     await _auth.verifyPhoneNumber(
       timeout: const Duration(seconds: 60),
       phoneNumber: phoneNumber,
@@ -73,22 +72,21 @@ class AuthService {
     // return vId;
   }
 
-  static Future<bool> matchingSmsCode(String vId, String smsCode) async{
-    try{
+  static Future<bool> matchingSmsCode(String vId, String smsCode) async {
+    try {
       final PhoneAuthCredential credential =
-      PhoneAuthProvider.credential(verificationId: vId, smsCode: smsCode);
+          PhoneAuthProvider.credential(verificationId: vId, smsCode: smsCode);
 
-      UserCredential userCredential = await _auth.signInWithCredential(credential);
+      UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
 
       print('credential have: $credential');
       print('user credential have: $userCredential');
       return userCredential.user != null ? true : false;
-    }
-    catch(error){
+    } catch (error) {
       print('Wrong OTP');
       return false;
     }
-
   }
 
   // SignUp with email and password

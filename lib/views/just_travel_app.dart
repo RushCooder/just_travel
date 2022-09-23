@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:just_travel/views/pages/home_page.dart';
+import 'package:just_travel/routes/route_generator.dart';
 import 'package:just_travel/views/pages/launcher_page.dart';
-import 'package:just_travel/views/pages/signin_page.dart';
-
-import '../routes/route_generator.dart';
 
 class JustTravelApp extends StatelessWidget {
   const JustTravelApp({Key? key}) : super(key: key);

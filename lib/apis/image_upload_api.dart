@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-
 import '../models/db-models/image_upload_model.dart';
 import '../utils/constants/urls.dart';
 

@@ -1,18 +1,12 @@
 import 'dart:async';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:just_travel/providers/user_provider.dart';
-import 'package:just_travel/services/auth/auth_service.dart';
-import 'package:just_travel/views/pages/signin_page.dart';
+import 'package:just_travel/providers/auth_provider.dart';
+import 'package:just_travel/views/pages/launcher_page.dart';
+import 'package:just_travel/views/widgets/custom_form_field.dart';
 import 'package:just_travel/views/widgets/dialogs/contact_dialog.dart';
 import 'package:just_travel/views/widgets/dialogs/verification_dialog.dart';
+import 'package:just_travel/views/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
-
-import '../../providers/auth_provider.dart';
-import '../widgets/custom_form_field.dart';
-import '../widgets/loading_widget.dart';
-import 'launcher_page.dart';
 
 class SignUpPage extends StatelessWidget {
   static const String routeName = '/signup';
@@ -145,7 +139,7 @@ class SignUpPage extends StatelessWidget {
                               bool emailVerified =
                                   await authProvider.checkEmailVerification();
 
-                              if (authProvider.errorMessage.isNotEmpty){
+                              if (authProvider.errorMessage.isNotEmpty) {
                                 authProvider.stopTimer();
                                 authProvider.resetTimerValue();
                                 timer.cancel();

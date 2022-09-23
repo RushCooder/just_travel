@@ -32,5 +32,4 @@ class TripProvider extends ChangeNotifier {
     notifyListeners();
     return tripModel;
   }
-
 }

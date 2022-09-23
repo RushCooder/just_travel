@@ -4,8 +4,9 @@ import 'package:just_travel/utils/helper_functions.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../utils/constants/urls.dart';
-import '../../../pages/trip_details_page.dart';
+import '../../trip-details-page/trip_details_page.dart';
 import 'trip_card.dart';
+
 class UpComingTrip extends StatelessWidget {
   const UpComingTrip({Key? key}) : super(key: key);
 

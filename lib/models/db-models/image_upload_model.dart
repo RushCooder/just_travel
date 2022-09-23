@@ -5,7 +5,6 @@ class ImageUploadModel {
     this.v,
   });
 
-
   @override
   String toString() {
     return 'ImageUploadModel{image: $image, id: $id, v: $v}';

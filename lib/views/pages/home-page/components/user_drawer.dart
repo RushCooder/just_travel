@@ -21,21 +21,22 @@ class UserDrawer extends StatelessWidget {
                   Text(
                     userProvider.user!.name!,
                     style: Theme.of(context).textTheme.headline5,
-                  ),Text(
+                  ),
+                  Text(
                     userProvider.user!.email!.emailId!,
                     style: Theme.of(context).textTheme.headline6,
                   ),
-
                   ElevatedButton(
-                      onPressed: () {
-                        context.read<AuthProvider>().signOut().then(
-                              (value) => Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  LauncherPage.routeName,
-                                  (route) => false),
-                            );
-                      },
-                      child: const Text('Sign Out'),),
+                    onPressed: () {
+                      context.read<AuthProvider>().signOut().then(
+                            (value) => Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                LauncherPage.routeName,
+                                (route) => false),
+                          );
+                    },
+                    child: const Text('Sign Out'),
+                  ),
                 ],
               ),
             ),

@@ -6,9 +6,8 @@ import 'package:just_travel/models/db-models/user_model.dart';
 import '../apis/image_upload_api.dart';
 import '../models/db-models/image_upload_model.dart';
 
-class UserProvider extends ChangeNotifier{
+class UserProvider extends ChangeNotifier {
   UserModel? user;
-
 
 /*
   * Image picking section start*/
@@ -16,7 +15,7 @@ class UserProvider extends ChangeNotifier{
   String? userImagePath;
   XFile? userImageFile;
 
-  void reset(){
+  void reset() {
     userImagePath = null;
     userImageFile = null;
   }
@@ -28,11 +27,11 @@ class UserProvider extends ChangeNotifier{
       _imageSource = ImageSource.gallery;
     }
     userImageFile =
-    await ImagePicker().pickImage(source: _imageSource, imageQuality: 50);
+        await ImagePicker().pickImage(source: _imageSource, imageQuality: 50);
     if (userImageFile != null) {
       try {
         ImageUploadModel? uploadModel =
-        await ImageUploadApi.uploadImage(userImageFile!.path);
+            await ImageUploadApi.uploadImage(userImageFile!.path);
         userImagePath = uploadModel!.image;
 
         print('picked image: $userImagePath');
@@ -40,7 +39,6 @@ class UserProvider extends ChangeNotifier{
         return uploadModel;
       } catch (e) {
         print('user provider -> image upload: $e');
-
       }
     }
     return null;
@@ -48,13 +46,10 @@ class UserProvider extends ChangeNotifier{
   /*
   * Image picking section end*/
 
-
-
   /*
   * Database query*/
   Future<void> fetchUserByEmail(String email) async {
     user = await UserApi.fetchUserByEmail(email);
     notifyListeners();
   }
-
 }

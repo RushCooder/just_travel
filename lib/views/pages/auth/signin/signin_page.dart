@@ -1,14 +1,10 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:just_travel/providers/user_provider.dart';
-import 'package:just_travel/services/auth/auth_service.dart';
-import 'package:just_travel/views/pages/signup_page.dart';
+import 'package:just_travel/providers/auth_provider.dart';
+import 'package:just_travel/views/pages/auth/signup/signup_page.dart';
+import 'package:just_travel/views/pages/launcher_page.dart';
+import 'package:just_travel/views/widgets/custom_form_field.dart';
+import 'package:just_travel/views/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
-
-import '../../providers/auth_provider.dart';
-import '../widgets/custom_form_field.dart';
-import '../widgets/loading_widget.dart';
-import 'launcher_page.dart';
 
 class SignInPage extends StatelessWidget {
   static const String routeName = '/signin';
@@ -162,10 +158,12 @@ class SignInPage extends StatelessWidget {
 
                           await context.read<AuthProvider>().signInWithGoogle();
 
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, LauncherPage.routeName, (route) => false);
+                          Navigator.pushNamedAndRemoveUntil(context,
+                              LauncherPage.routeName, (route) => false);
                         } catch (error) {
-                          context.read<AuthProvider>().setError(error.toString());
+                          context
+                              .read<AuthProvider>()
+                              .setError(error.toString());
                           Navigator.pop(context);
                         }
                       },

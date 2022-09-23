@@ -58,6 +58,7 @@ class HotelProvider extends ChangeNotifier {
     selectedHotelType = value;
     notifyListeners();
   }
+
   setHotel(HotelModel? value) {
     hotelModel = value;
     notifyListeners();
@@ -72,37 +73,6 @@ class HotelProvider extends ChangeNotifier {
 
   /*
   *============================ Hotel api calling section ============================*/
-
-  //create hotel
-  Future<bool> saveHotel(
-      {required String hotelName,
-      required String city,
-      required String division,
-      required String description,
-      required List<Rooms> rooms}) async {
-    final HotelModel hotelModel = HotelModel(
-      name: hotelName,
-      city: city,
-      division: division,
-      description: description,
-      photos: hotelImageList,
-      type: selectedHotelType,
-      rooms: rooms,
-    );
-    bool isCreated = true;
-    await HotelApi.createHotel(hotelModel);
-    if (isCreated) {
-      getAllHotels();
-    }
-    return isCreated;
-  }
-
-  // delete hotel by id
-  Future<void> deleteHotelById(String id) async {
-    await HotelApi.deleteHotelById(id);
-    getAllHotels();
-    notifyListeners();
-  }
 
   // get all hotels
   Future<List<HotelModel>> getAllHotels() async {
