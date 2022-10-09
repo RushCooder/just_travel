@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/providers/room_provider.dart';
+import 'package:just_travel/providers/trip_provider.dart';
 import 'package:just_travel/utils/constants/symbols.dart';
+import 'package:just_travel/views/pages/trip-details-page/trip_details_page.dart';
 import 'package:just_travel/views/widgets/expandable_text_widget.dart';
 import 'package:just_travel/views/widgets/image_grid_view.dart';
 import 'package:just_travel/views/widgets/image_slider.dart';
 import 'package:provider/provider.dart';
 
-roomDetailsDialog(BuildContext context, String roomId) async {
+roomDetailsDialog(BuildContext context, String roomId, Function(RoomModel roomModel) onSelectRoom) async {
   await context.read<RoomProvider>().getRoomsById(roomId);
   showDialog(
       context: context,
@@ -83,7 +85,14 @@ roomDetailsDialog(BuildContext context, String roomId) async {
                         shape: const StadiumBorder(),
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
+
+                        print('room id: ${room!.id!}');
+                        onSelectRoom(room!);
+                        context.read<TripProvider>().setRoomSelectedStatus(true);
+                        int count = 0;
+                        Navigator.popUntil(context, (route) {
+                          return count++ == 2;
+                        });
                       },
                       child: const Text('BOOK NOW'),
                     ),

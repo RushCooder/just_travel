@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.17.6 <3.0.0"
+  sdk: ">=2.18.2 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -45,7 +45,7 @@ dependencies:
   carousel_slider: ^4.1.1
   persistent_bottom_nav_bar: ^4.0.2
   animations: ^2.0.3
-  google_sign_in: ^5.4.1
+  google_sign_in: ^5.4.2
   pin_code_fields: ^7.4.0
   expandable_text: 2.3.0
   flutter_expanded_tile: ^0.3.6

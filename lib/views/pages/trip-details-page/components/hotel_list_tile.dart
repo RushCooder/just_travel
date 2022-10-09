@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expanded_tile/flutter_expanded_tile.dart';
+import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/providers/hotel_provider.dart';
 import 'package:just_travel/views/pages/trip-details-page/dialog/show_rooms_dialog.dart';
 import 'package:just_travel/views/widgets/expandable_text_widget.dart';
@@ -7,7 +8,8 @@ import 'package:just_travel/views/widgets/image_slider.dart';
 import 'package:provider/provider.dart';
 
 class HotelListTile extends StatelessWidget {
-  const HotelListTile({Key? key}) : super(key: key);
+  Function(RoomModel roomModel) onSelectRoom;
+  HotelListTile({required this.onSelectRoom, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class HotelListTile extends StatelessWidget {
                               shape: const StadiumBorder(),
                             ),
                             onPressed: () {
-                              showRoomsDialog(context, hotel.rooms!);
+                              showRoomsDialog(context, hotel.rooms!, onSelectRoom);
                             },
                             child: Text(
                               'Book Now',

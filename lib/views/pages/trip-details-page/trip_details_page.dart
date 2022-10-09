@@ -2,7 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:just_travel/models/db-models/join_model.dart';
+import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/providers/hotel_provider.dart';
+import 'package:just_travel/providers/user_provider.dart';
 import 'package:just_travel/utils/theme/status_bar_theme.dart';
 import 'package:just_travel/views/pages/trip-details-page/components/cover_photo.dart';
 import 'package:just_travel/views/pages/trip-details-page/components/hotel_list_tile.dart';
@@ -20,11 +23,20 @@ import '../../../utils/constants/urls.dart';
 class TripDetailsPage extends StatelessWidget {
   static const routeName = '/home/trip-details-page';
   final String id;
-  const TripDetailsPage({required this.id, Key? key}) : super(key: key);
+  TripDetailsPage({required this.id, Key? key}) : super(key: key);
+  RoomModel? roomModel;
+
+  // void onSelectRoom(RoomModel roomModel){
+  //   print('tirp details: $roomModel');
+  //   this.roomModel = roomModel;
+  //
+  // }
 
   @override
   Widget build(BuildContext context) {
     context.read<TripProvider>().getTripById(id);
+    // context.read<TripProvider>().costCalculate(trip, room);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: appbarLayout(
@@ -74,7 +86,15 @@ class TripDetailsPage extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        const HotelListTile(),
+                        HotelListTile(
+                          onSelectRoom: (roomModel) {
+                            print('tirp details: $roomModel');
+                            this.roomModel = roomModel;
+                            context
+                                .read<TripProvider>()
+                                .costCalculate(trip, roomModel);
+                          },
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -83,7 +103,27 @@ class TripDetailsPage extends StatelessWidget {
                   ),
 
                   // JOIN Card
-                  JoinCard(),
+                  Consumer<TripProvider>(builder: (context, provider, child) {
+                    return JoinCard(
+                      tripModel: trip,
+                      roomModel: roomModel,
+                      onJoin: provider.isRoomSelected ? (){
+                        print('trip name: ${trip.placeName}');
+                        print('trip id: ${trip.id}');
+
+                        print('room title: ${roomModel?.title}');
+                        print('room id: ${roomModel?.id}');
+
+                        String? userName = context.read<UserProvider>().user!.name!;
+                        String? userId = context.read<UserProvider>().user!.id!;
+
+                        print('user name: $userName');
+                        print('user id: $userId');
+
+                        print('join clicked');
+                      } : null,
+                    );
+                  }),
                 ],
               );
             } else if (snapshot.hasError) {

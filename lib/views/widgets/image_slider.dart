@@ -13,15 +13,19 @@ class ImageSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       itemCount: photos.length,
-      itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+      itemBuilder: (
+        BuildContext context,
+        int itemIndex,
+        int pageViewIndex,
+      ) =>
           ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Image.network(
-          '${baseUrl}uploads/${photos[itemIndex]}',
-          fit: BoxFit.cover,
-          height: height,
-          width: MediaQuery.of(context).size.width,
-        ),
+          borderRadius: BorderRadius.circular(20),
+          child: Image.network(
+            '${baseUrl}uploads/${photos[itemIndex]}',
+            fit: BoxFit.cover,
+            height: height,
+            width: MediaQuery.of(context).size.width,
+          ),
       ),
       options: CarouselOptions(
         height: height,

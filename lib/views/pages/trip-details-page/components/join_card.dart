@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:just_travel/models/db-models/room_model.dart';
+import 'package:just_travel/models/db-models/trip_model.dart';
+import 'package:just_travel/providers/trip_provider.dart';
 import 'package:just_travel/utils/constants/symbols.dart';
+import 'package:provider/provider.dart';
 
 class JoinCard extends StatelessWidget {
-  const JoinCard({Key? key}) : super(key: key);
+  RoomModel? roomModel;
+  final TripModel tripModel;
+  VoidCallback? onJoin;
+  JoinCard({ required this.tripModel, required this.roomModel, required this.onJoin, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +40,25 @@ class JoinCard extends StatelessWidget {
                         .headline3!
                         .copyWith(fontSize: 17),
                   ),
-                  Text(
-                    '${currencySymbol}43423',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5!
-                        .copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+                  Row(
+                    children: [
+                      Consumer<TripProvider>(
+                        builder:(context, provider, child) =>  Text(
+                          '$currencySymbol${provider.totalCost}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5!
+                              .copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Text(
+                        '/Person',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -49,7 +69,7 @@ class JoinCard extends StatelessWidget {
                         vertical: 20, horizontal: 30),
                     shape: const StadiumBorder(),
                   ),
-                  onPressed: () {},
+                  onPressed: onJoin,
                   child: const Text('JOIN'),
                 ),
               ),

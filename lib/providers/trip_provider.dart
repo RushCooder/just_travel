@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:just_travel/models/db-models/room_model.dart';
 
 import '../apis/image_upload_api.dart';
 import '../apis/trip_api.dart';
@@ -10,6 +11,19 @@ import '../models/db-models/trip_model.dart';
 class TripProvider extends ChangeNotifier {
   List<TripModel> tripList = [];
   TripModel? tripModel;
+  num? totalCost;
+  bool isRoomSelected = false;
+
+  void setRoomSelectedStatus(bool status){
+    isRoomSelected = status;
+    notifyListeners();
+  }
+
+  void resetValue(){
+    isRoomSelected = false;
+    totalCost = null;
+    notifyListeners();
+  }
 
 /*
   * ============= query ============*/
@@ -30,6 +44,19 @@ class TripProvider extends ChangeNotifier {
   Future<TripModel?> getTripById(String tripId) async {
     tripModel = await TripApi.getTripById(tripId);
     notifyListeners();
+    costCalculate(tripModel!, null);
     return tripModel;
   }
+
+  void costCalculate(TripModel trip, RoomModel? room){
+    if (room == null) {
+      totalCost = trip.cost;
+    }
+    else{
+      totalCost = (trip.cost! + (room.price! ~/ room.maxCapacity!));
+    }
+
+    notifyListeners();
+  }
+
 }

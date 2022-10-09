@@ -75,7 +75,6 @@ class RoomApi {
       var enCodedDate = await response.stream.bytesToString();
       var data = json.decode(enCodedDate);
       RoomModel room = RoomModel.fromJson(data);
-      print('room: $room');
       return room;
     } else {
       print(response.reasonPhrase);

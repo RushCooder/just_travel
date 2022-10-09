@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/providers/room_provider.dart';
 import 'package:just_travel/views/pages/trip-details-page/dialog/roomDetailsDialog.dart';
 import 'package:provider/provider.dart';
 
-showRoomsDialog(BuildContext context, List<String> rooms) => showDialog(
+showRoomsDialog(BuildContext context, List<String> rooms, Function(RoomModel roomModel) onSelectRoom) => showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Room'),
@@ -17,7 +18,7 @@ showRoomsDialog(BuildContext context, List<String> rooms) => showDialog(
                 crossAxisCount: 7),
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
-                roomDetailsDialog(context, rooms[index]);
+                roomDetailsDialog(context, rooms[index], onSelectRoom);
                 print('Clicked');
               },
               child: Container(
