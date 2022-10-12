@@ -69,7 +69,6 @@ class HotelApi {
       var enCodedDate = await response.stream.bytesToString();
       var data = json.decode(enCodedDate);
       HotelModel hotel = HotelModel.fromJson(data);
-      print('hotelApi: $hotel');
       return hotel;
     } else {
       print(response.reasonPhrase);
@@ -90,7 +89,6 @@ class HotelApi {
         (index) => HotelModel.fromJson(data[index]),
       );
 
-      print('hotelApi: $hotelModel');
       return hotelModel;
     } else {
       print(response.reasonPhrase);

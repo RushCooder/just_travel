@@ -14,7 +14,7 @@ class UpComingTrip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<TripProvider>(
       builder: (context, tripProvider, child) {
-        print('trips: ${tripProvider.tripList}');
+        // print('trips: ${tripProvider.tripList}');
         return tripProvider.tripList.isEmpty
             ? const Center(
                 child: Text('There is no trip'),
@@ -31,7 +31,6 @@ class UpComingTrip extends StatelessWidget {
                   onTap: () {
                     Navigator.pushNamed(context, TripDetailsPage.routeName,
                         arguments: tripProvider.tripList[index].id!);
-                    print('tapped');
                   },
                   child: TripCard(
                     title: tripProvider.tripList[index].placeName!,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:just_travel/models/db-models/room_model.dart';
+import 'package:just_travel/models/db-models/trip_model.dart';
 import 'package:just_travel/views/pages/auth/signin/signin_page.dart';
 import 'package:just_travel/views/pages/auth/signup/signup_page.dart';
+import 'package:just_travel/views/pages/confirm-page/confirm_page.dart';
 import 'package:just_travel/views/pages/error/error_page.dart';
 import 'package:just_travel/views/pages/home-page/home_page.dart';
 import 'package:just_travel/views/pages/launcher_page.dart';
@@ -47,6 +50,19 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) => TripDetailsPage(id: args as String),
         );
+
+      case ConfirmPage.routeName:
+        {
+          List list = args as List;
+          TripModel trip = list[0] as TripModel;
+          RoomModel room = list[1] as RoomModel;
+          return MaterialPageRoute(
+            builder: (context) => ConfirmPage(
+              trip: trip,
+              room: room,
+            ),
+          );
+        }
 
       /*
     * ============= Trip route end ============*/

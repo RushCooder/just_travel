@@ -85,8 +85,6 @@ roomDetailsDialog(BuildContext context, String roomId, Function(RoomModel roomMo
                         shape: const StadiumBorder(),
                       ),
                       onPressed: () {
-
-                        print('room id: ${room!.id!}');
                         onSelectRoom(room!);
                         context.read<TripProvider>().setRoomSelectedStatus(true);
                         int count = 0;

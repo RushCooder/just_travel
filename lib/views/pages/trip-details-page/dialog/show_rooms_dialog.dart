@@ -19,7 +19,6 @@ showRoomsDialog(BuildContext context, List<String> rooms, Function(RoomModel roo
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
                 roomDetailsDialog(context, rooms[index], onSelectRoom);
-                print('Clicked');
               },
               child: Container(
                 height: 5,

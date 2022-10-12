@@ -7,8 +7,11 @@ class JustTravelApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blueGrey,
+      ),
       initialRoute: LauncherPage.routeName,
       onGenerateRoute: RouteGenerator.onGenerateRoute,
       // initialRoute: HomePage.routeName,
