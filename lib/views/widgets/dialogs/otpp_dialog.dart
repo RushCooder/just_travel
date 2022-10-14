@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
 import 'package:just_travel/utils/helper_functions.dart';
 import 'package:just_travel/views/pages/launcher_page.dart';
+import 'package:just_travel/views/widgets/loading_widget.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
@@ -51,12 +52,21 @@ void showOtpDialog(BuildContext context, String vId) {
           onCompleted: (v) async {
             print("Completed");
             try {
+              showLoadingDialog(context);
               bool otpVerified =
                   await provider.matchingSmsCode(vId, codeController.text);
               if (otpVerified) {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, LauncherPage.routeName, (route) => false);
+                // await authProvider.deleteUser();
+               bool isAuth = await provider.authenticate(isSignUp: true);
+               if(isAuth){
+                 // if (await provider.emailVerification()){
+                   Navigator.pushNamedAndRemoveUntil(
+                       context, LauncherPage.routeName, (route) => false);
+                 // }
+               }
+
               } else {
+                Navigator.pop(context);
                 showMsg(context, 'Wrong OTP');
               }
             } catch (error) {

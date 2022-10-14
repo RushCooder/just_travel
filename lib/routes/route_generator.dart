@@ -7,6 +7,7 @@ import 'package:just_travel/views/pages/confirm-page/confirm_page.dart';
 import 'package:just_travel/views/pages/error/error_page.dart';
 import 'package:just_travel/views/pages/home-page/home_page.dart';
 import 'package:just_travel/views/pages/launcher_page.dart';
+import 'package:just_travel/views/pages/my-trips-page/my_trips_page.dart';
 import 'package:just_travel/views/pages/trip-details-page/trip_details_page.dart';
 
 class RouteGenerator {
@@ -44,7 +45,7 @@ class RouteGenerator {
     * ============= Home page route end ============*/
 
       /*
-    * ============= Trip route end ============*/
+    * ============= Trip route start ============*/
 
       case TripDetailsPage.routeName:
         return MaterialPageRoute(
@@ -66,6 +67,17 @@ class RouteGenerator {
 
       /*
     * ============= Trip route end ============*/
+
+      /*
+    * ============= My trip route start ============*/
+      case MyTripsPage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => MyTripsPage(),
+        );
+
+      /*
+    * ============= My trip route start ============*/
+
 
       default:
         return MaterialPageRoute(

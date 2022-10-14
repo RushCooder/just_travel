@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
 import 'package:just_travel/providers/user_provider.dart';
+import 'package:just_travel/utils/helper_functions.dart';
 import 'package:just_travel/views/widgets/dialogs/otpp_dialog.dart';
 import 'package:just_travel/views/widgets/dialogs/user_image_picker_dialog.dart';
 import 'package:just_travel/views/widgets/loading_widget.dart';
@@ -37,6 +38,7 @@ void contactDialog(BuildContext context) {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                // image card
                 Consumer<UserProvider>(
                   builder: (context, userProvider, child) =>
                       userProvider.userImagePath == null
@@ -69,15 +71,19 @@ void contactDialog(BuildContext context) {
                 const SizedBox(
                   height: 30,
                 ),
+
+                // mobile number
                 CustomFormField(
                   controller: mobileNumberTextEditingController,
                   icon: Icons.phone,
                   labelText: 'Mobile Number',
+                  isMobile: true,
                   textInputType: TextInputType.phone,
                 ),
                 const SizedBox(
                   height: 30,
                 ),
+                //current city
                 CustomFormField(
                   controller: cityTextEditingController,
                   icon: Icons.location_city,
@@ -86,10 +92,11 @@ void contactDialog(BuildContext context) {
                 const SizedBox(
                   height: 30,
                 ),
+                // current division
                 CustomFormField(
                   controller: divisionTextEditingController,
                   icon: Icons.living,
-                  labelText: 'Living Division',
+                  labelText: 'Current Division',
                 ),
               ],
             ),
@@ -109,6 +116,8 @@ void contactDialog(BuildContext context) {
                   );
               showLoadingDialog(context);
               otpDialog(context, mobileNumberTextEditingController.text.trim());
+            }else{
+              showMsg(context, 'Please upload image');
             }
           },
           child: const Text('Next'),

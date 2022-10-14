@@ -13,7 +13,7 @@ class CheckUserTrip extends StatelessWidget {
     final tripProvider = context.read<TripProvider>();
     final userProvider = context.read<UserProvider>();
     return FutureBuilder(
-      future: tripProvider.getTripByUserId(
+      future: tripProvider.getTripByUserIdTripId(
           userProvider.user!.id!, tripProvider.tripModel!.id!),
       builder: (context, snapshot) {
         if (snapshot.hasError) {

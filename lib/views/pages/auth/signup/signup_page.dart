@@ -1,6 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
+import 'package:just_travel/views/pages/auth/components/auth_button.dart';
+import 'package:just_travel/views/pages/auth/components/error_message_text.dart';
+import 'package:just_travel/views/pages/auth/components/google_signin_button.dart';
+import 'package:just_travel/views/pages/auth/components/or_bar_divider.dart';
+import 'package:just_travel/views/pages/auth/signup/components/already_user.dart';
 import 'package:just_travel/views/pages/launcher_page.dart';
 import 'package:just_travel/views/widgets/custom_form_field.dart';
 import 'package:just_travel/views/widgets/dialogs/contact_dialog.dart';
@@ -21,7 +26,7 @@ class SignUpPage extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   SignUpPage({Key? key}) : super(key: key);
 
-  void setAuthentication(BuildContext context) {
+  bool setAuthentication(BuildContext context) {
     if (passwordTextEditingController.text ==
         confirmPasswordTextEditingController.text) {
       // set sign up info
@@ -30,8 +35,10 @@ class SignUpPage extends StatelessWidget {
             emailTextEditingController.text.trim(),
             passwordTextEditingController.text.trim(),
           );
+
+      return true;
     } else {
-      context.read<AuthProvider>().setError('Password not matched');
+      return false;
     }
   }
 
@@ -112,167 +119,55 @@ class SignUpPage extends StatelessWidget {
 
                   /*
                   * Sign up button*/
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(15),
-                      shape: const StadiumBorder(),
-                    ),
+                  AuthButton(
+                    buttonName: 'SIGN UP',
                     onPressed: () async {
                       authProvider.setError('');
                       // setting authentication info
-                      setAuthentication(context);
+                      // setAuthentication(context);
 
                       // authenticating user
                       if (formKey.currentState!.validate()) {
-                        // showLoadingDialog(context);
-                        verificationDialog(context);
-                        authProvider.startTimer();
+                        showLoadingDialog(context);
+                        // verificationDialog(context);
+                        // authProvider.startTimer();
 
                         try {
-                          bool isSuccess =
-                              await authProvider.authenticate(isSignUp: true);
-
-                          if (isSuccess) {
-                            print('Sign up success');
-                            Timer.periodic(const Duration(seconds: 3),
-                                (timer) async {
-                              bool emailVerified =
-                                  await authProvider.checkEmailVerification();
-
-                              if (authProvider.errorMessage.isNotEmpty) {
-                                authProvider.stopTimer();
-                                authProvider.resetTimerValue();
-                                timer.cancel();
-                                Navigator.pop(context);
-                              }
-
-                              if (emailVerified) {
-                                authProvider.stopTimer();
-                                timer.cancel();
-                                Navigator.pop(context);
-                                // context.read<AuthProvider>().storeInDataBase(
-                                //       nameTextEditingController.text,
-                                //       emailTextEditingController.text,
-                                //       emailVerified,
-                                //     );
-                                // Navigator.pushNamedAndRemoveUntil(context,
-                                //     LauncherPage.routeName, (route) => false);
-                                authProvider.emailVerified = emailVerified;
-                                contactDialog(context);
-                              }
-                            });
+                          if (setAuthentication(context)) {
+                            bool isSuccess =
+                                await authProvider.authenticate(isSignUp: true);
+                            if (isSuccess) {
+                              await authProvider.deleteUser();
+                              Navigator.pop(context);
+                              contactDialog(context);
+                            }
+                          } else {
+                            context
+                                .read<AuthProvider>()
+                                .setError('Password not matched');
+                            Navigator.pop(context);
                           }
                         } catch (error) {
                           print('error: $error');
                         }
                       }
                     },
-                    child: Text(
-                      'SIGN UP',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge!
-                          .copyWith(color: Colors.white70),
-                    ),
                   ),
                   const SizedBox(
                     height: 30,
                   ),
 
                   // OR bar with divider
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        child: const Divider(
-                          height: 10,
-                          thickness: 2,
-                          indent: 10,
-                          endIndent: 0,
-                          color: Colors.black,
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Or Sign Up With'),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        child: const Divider(
-                          height: 10,
-                          thickness: 2,
-                          indent: 10,
-                          endIndent: 0,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
+                  const OrBarDivider(barText: 'Or Sign Up With'),
 
                   // google sign in button
-                  Center(
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      onPressed: () async {
-                        try {
-                          showLoadingDialog(context);
+                  const GoogleSignInButton(),
 
-                          await context.read<AuthProvider>().signInWithGoogle();
-
-                          Navigator.pushNamedAndRemoveUntil(context,
-                              LauncherPage.routeName, (route) => false);
-                        } catch (error) {
-                          context
-                              .read<AuthProvider>()
-                              .setError(error.toString());
-                          Navigator.pop(context);
-                        }
-                      },
-                      // child: const Icon(
-                      //   Icons.g_mobiledata,
-                      //   size: 50,
-                      // ),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: Image.asset(
-                          'images/google_icon.png',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  // new user and signup
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('Already have an account?'),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('SIGN IN'),
-                      ),
-                    ],
-                  ),
+                  // already user and sign in
+                  const AlreadyUser(),
 
                   // showing error message
-                  Center(
-                    child: Consumer<AuthProvider>(
-                      builder: (context, authProvider, child) => Text(
-                        authProvider.errorMessage,
-                        style: TextStyle(
-                          color: Theme.of(context).errorColor,
-                        ),
-                      ),
-                    ),
-                  ),
+                  const ErrorMessageText(),
                 ],
               ),
             ),

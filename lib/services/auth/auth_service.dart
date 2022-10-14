@@ -7,6 +7,18 @@ class AuthService {
   // this function will return current user information
   static User? get user => _auth.currentUser;
 
+  // delete user
+  static Future<bool> deleteUser () async{
+    try{
+      await user?.delete();
+      return true;
+    }catch(error){
+      print('delete firebase auth user: $error');
+      return false;
+    }
+
+  }
+
   // reload user
   static Future<void> get reload => _auth.currentUser!.reload();
 

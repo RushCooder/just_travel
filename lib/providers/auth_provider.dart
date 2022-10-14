@@ -18,7 +18,8 @@ class AuthProvider extends ChangeNotifier {
   String errorMessage = '';
   Timer? timer;
   int emailResendTime = 59;
-  bool emailVerified = false, mobileVerified = false;
+  bool isEmailVerified = false, isMobileVerified = false;
+  bool? ensureEmailVerified;
   String? vId;
 
   // change visibility of password
@@ -98,9 +99,26 @@ class AuthProvider extends ChangeNotifier {
     timer!.cancel();
   }
 
+
+
+  Future<bool> deleteUser () async{
+    try{
+      await AuthService.deleteUser();
+      return true;
+    }catch(error){
+      print('delete firebase auth user: $error');
+      return false;
+    }
+
+  }
+
+
   // checking email is verified or not
-  Future<bool> checkEmailVerification() {
-    return AuthService.checkIsVerified();
+  Future<bool> checkEmailVerification() async{
+    return await AuthService.checkIsVerified();
+    // ensureEmailVerified = await AuthService.checkIsVerified();
+    // notifyListeners();
+    // return ensureEmailVerified;
   }
 
 // checking phone number verification. this method will return vId
@@ -114,8 +132,9 @@ class AuthProvider extends ChangeNotifier {
     try {
       if (await AuthService.matchingSmsCode(vId, smsCode)) {
         //mobile verification true and store in database
-        mobileVerified = true;
+        isMobileVerified = true;
         await storeInDataBase();
+        signOut();
         return true;
       } else {
         throw 'Wrong OTP';
@@ -141,6 +160,21 @@ class AuthProvider extends ChangeNotifier {
   //resend verification email
   Future<void> reSendVerificationEmail() async {
     await AuthService.emailVerification();
+    signOut();
+  }
+
+  // SignUp user with email verification
+  Future<bool> emailVerification() async {
+    try {
+       if (await AuthService.emailVerification()){
+
+         return true;
+       }
+       throw 'Email not verified';
+    } catch (error) {
+      print(error);
+      return false;
+    }
   }
 
   // authenticating user
@@ -150,10 +184,6 @@ class AuthProvider extends ChangeNotifier {
       if (isSignUp) {
         print('signup calling');
         status = await AuthService.signUp(email!, password!);
-        if (status) {
-          await AuthService.emailVerification();
-          // storeInDataBase(name, email, isVerified)
-        }
       } else {
         status = await AuthService.signIn(email!, password!);
       }
@@ -185,7 +215,6 @@ class AuthProvider extends ChangeNotifier {
 
           UserModel newUser = UserModel(
             name: userCredential.user!.displayName,
-            profileImage: userCredential.user!.photoURL,
             email: Email(
               emailId: userCredential.user!.email,
               isVerified: userCredential.user!.emailVerified,
@@ -224,11 +253,11 @@ class AuthProvider extends ChangeNotifier {
         name: name,
         email: Email(
           emailId: email,
-          isVerified: emailVerified,
+          isVerified: isEmailVerified,
         ),
         mobile: Mobile(
           number: mobileNumber,
-          isVerified: mobileVerified,
+          isVerified: isMobileVerified,
         ),
         city: city,
         division: division,

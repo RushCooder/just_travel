@@ -52,4 +52,12 @@ class UserProvider extends ChangeNotifier {
     user = await UserApi.fetchUserByEmail(email);
     notifyListeners();
   }
+
+  // update user
+  Future<void> updateUser(Map<String, dynamic> map, String userId) async {
+    user = await UserApi.updateUser(map, userId);
+    notifyListeners();
+  }
+
+
 }

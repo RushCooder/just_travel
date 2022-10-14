@@ -36,7 +36,7 @@ class TripDetailsPage extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: FutureBuilder<TripModel?>(
-            future: context.read<TripProvider>().getTripById(id),
+            future: context.read<TripProvider>().getTripByTripId(id),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 TripModel? trip = snapshot.data;

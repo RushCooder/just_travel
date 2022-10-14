@@ -12,6 +12,7 @@ import '../models/db-models/trip_model.dart';
 
 class TripProvider extends ChangeNotifier {
   List<TripModel> tripList = [];
+  List<TripModel> myTripsList = [];
   TripModel? tripModel;
   num? totalCost;
   bool isRoomSelected = false;
@@ -67,18 +68,23 @@ class TripProvider extends ChangeNotifier {
     }
   }
 
-  // get trip by id
-  Future<TripModel?> getTripById(String tripId) async {
-    tripModel = await TripApi.getTripById(tripId);
+  // get trip by tripId
+  Future<TripModel?> getTripByTripId(String tripId) async {
+    tripModel = await TripApi.getTripByTripId(tripId);
     notifyListeners();
     costCalculate(tripModel!, null);
     return tripModel;
   }
 
-  Future<bool> getTripByUserId(String userId, String tripId) async{
-    TripModel? trip = await TripApi.getTripByUserId(userId, tripId);
-    print('trip: ${trip!.placeName}');
+  // fetching trip by userId tripId
+  Future<bool> getTripByUserIdTripId(String userId, String tripId) async{
+    TripModel? trip = await TripApi.getTripByUserIdTripId(userId, tripId);
+    return trip?.placeName != null;
+  }
 
-    return trip.placeName != null;
+  // fetching trip by userId
+  Future<void>getTripByUserId(String userId) async{
+    myTripsList = await TripApi.getTripsByUserId(userId);
+    notifyListeners();
   }
 }

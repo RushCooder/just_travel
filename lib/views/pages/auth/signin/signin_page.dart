@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
-import 'package:just_travel/views/pages/auth/signup/signup_page.dart';
 import 'package:just_travel/views/pages/launcher_page.dart';
 import 'package:just_travel/views/widgets/custom_form_field.dart';
 import 'package:just_travel/views/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../components/error_message_text.dart';
+import '../components/google_signin_button.dart';
+import '../components/new_user_option.dart';
+import '../components/or_bar_divider.dart';
+import '../components/auth_button.dart';
+
 class SignInPage extends StatelessWidget {
-  static const String routeName = '/signin';
+  static const String routeName = '/sign_in';
   final TextEditingController emailTextEditingController =
       TextEditingController();
   final TextEditingController passwordTextEditingController =
@@ -74,11 +79,8 @@ class SignInPage extends StatelessWidget {
 
                   /*
                   * Sign In button*/
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(15),
-                      shape: const StadiumBorder(),
-                    ),
+                  AuthButton(
+                    buttonName: 'SIGN IN',
                     onPressed: () {
                       // setting authentication info
                       setAuthentication(context);
@@ -102,107 +104,22 @@ class SignInPage extends StatelessWidget {
                         );
                       }
                     },
-                    child: Text(
-                      'SIGN IN',
-                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            color: Colors.white70,
-                          ),
-                    ),
                   ),
                   const SizedBox(
                     height: 30,
                   ),
 
                   // OR bar with divider
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        child: const Divider(
-                          height: 10,
-                          thickness: 2,
-                          indent: 10,
-                          endIndent: 0,
-                          color: Colors.black,
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Or Sign In With'),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        child: const Divider(
-                          height: 10,
-                          thickness: 2,
-                          indent: 10,
-                          endIndent: 0,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
+                  const OrBarDivider(barText: 'Or Sign In With'),
 
                   // google sign in button
-                  Center(
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                      ),
-                      onPressed: () async {
-                        try {
-                          showLoadingDialog(context);
-
-                          await context.read<AuthProvider>().signInWithGoogle();
-
-                          Navigator.pushNamedAndRemoveUntil(context,
-                              LauncherPage.routeName, (route) => false);
-                        } catch (error) {
-                          context
-                              .read<AuthProvider>()
-                              .setError(error.toString());
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        child: Image.asset(
-                          'images/google_icon.png',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                    ),
-                  ),
+                  const GoogleSignInButton(),
 
                   // new user and signup
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('New User?'),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, SignUpPage.routeName);
-                        },
-                        child: const Text('SIGN UP'),
-                      ),
-                    ],
-                  ),
+                  const NewUserOption(),
 
                   // showing error message
-                  Center(
-                    child: Consumer<AuthProvider>(
-                      builder: (context, authProvider, child) => Text(
-                        authProvider.errorMessage,
-                        style: TextStyle(
-                          color: Theme.of(context).errorColor,
-                        ),
-                      ),
-                    ),
-                  ),
+                  const ErrorMessageText(),
                 ],
               ),
             ),

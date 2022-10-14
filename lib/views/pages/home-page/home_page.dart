@@ -7,7 +7,7 @@ import 'package:just_travel/views/widgets/appbar_layout.dart';
 import '../../widgets/app_text.dart';
 import 'components/custom_app_bar.dart';
 import 'components/search_bar.dart';
-import 'components/user_drawer.dart';
+import 'components/drawer/user_drawer.dart';
 
 class HomePage extends StatelessWidget {
   static const String routeName = '/home';

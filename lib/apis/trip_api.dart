@@ -53,7 +53,7 @@ class TripApi {
   }
 
   // fetching trip by trip id
-  static Future<TripModel?> getTripById(String tripId) async {
+  static Future<TripModel?> getTripByTripId(String tripId) async {
     var request = Request('GET', Uri.parse('${baseUrl}trips/$tripId'));
     StreamedResponse response = await request.send();
 
@@ -68,7 +68,8 @@ class TripApi {
     }
   }
 
-  static Future<TripModel?> getTripByUserId(
+  // fetching trip by userId tripId
+  static Future<TripModel?> getTripByUserIdTripId(
       String userId, String tripId) async {
     var request = Request('GET', Uri.parse('${baseUrl}join/$userId/$tripId'));
 
@@ -88,6 +89,31 @@ class TripApi {
     } catch (e) {
       print('failed because: $e');
       return null;
+    }
+  }
+
+  // fetching trip by userId
+  static Future<List<TripModel>> getTripsByUserId(String userId) async {
+    var request = Request('GET', Uri.parse('${baseUrl}join/$userId'));
+    try {
+      StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var encodedData = await response.stream.bytesToString();
+        var decodedData = jsonDecode(encodedData);
+        List<TripModel> trips = List.generate(
+          decodedData.length,
+          (index) => TripModel.fromJson(decodedData[index]['tripId']),
+        );
+        // print('trip found');
+        return trips;
+      } else {
+        print(response.reasonPhrase);
+        throw Error();
+      }
+    } catch (e) {
+      print('failed because: $e');
+      return [];
     }
   }
 }

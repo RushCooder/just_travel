@@ -12,6 +12,7 @@ class CustomFormField extends StatelessWidget {
   TextInputType textInputType;
   final String labelText;
   VoidCallback? onEditingComplete;
+  bool isMobile;
   CustomFormField({
     required this.controller,
     this.icon,
@@ -19,6 +20,7 @@ class CustomFormField extends StatelessWidget {
     this.onEditingComplete,
     this.isPassword = false,
     this.isPrefIcon = true,
+    this.isMobile = false,
     this.textInputType = TextInputType.text,
     this.maxLine = 1,
     Key? key,
@@ -32,6 +34,7 @@ class CustomFormField extends StatelessWidget {
         maxLines: maxLine,
         keyboardType: textInputType,
         decoration: InputDecoration(
+          hintText: isMobile ? '+8801XXXXXXXXX' : '',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),

@@ -31,6 +31,38 @@ class UserApi {
     }
   }
 
+  // update user
+  static Future<UserModel?> updateUser(Map<String, dynamic> map, String userId) async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+    var request = Request('PATCH', Uri.parse('${baseUrl}users/$userId'));
+    request.body = json.encode(map);
+    // {
+    //   "email.isVerified": true
+    // }
+    request.headers.addAll(headers);
+
+    try {
+      StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var enCodedDate = await response.stream.bytesToString();
+        var data = json.decode(enCodedDate);
+        UserModel user = UserModel.fromJson(data);
+        print('updateUser user: $user');
+        return user;
+      } else {
+        throw Error();
+      }
+    } catch (error) {
+      print('create user error: $error');
+      return null;
+    }
+  }
+
+
+
   // fetching user by email
   static Future<UserModel?> fetchUserByEmail(String email) async {
     try {
