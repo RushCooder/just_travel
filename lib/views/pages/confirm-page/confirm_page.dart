@@ -10,7 +10,6 @@ import 'package:just_travel/views/pages/confirm-page/components/payment_method_c
 import 'package:just_travel/views/pages/confirm-page/components/payment_now_button.dart';
 import 'package:just_travel/views/pages/confirm-page/components/payment_summary_card.dart';
 import 'package:just_travel/views/pages/confirm-page/components/title_text.dart';
-import 'package:just_travel/views/widgets/back_button_custom.dart';
 import 'package:just_travel/views/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -25,19 +24,13 @@ class ConfirmPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Payment Details'),
+        elevation: 0,
+      ),
       body: SafeArea(
         child: ListView(
           children: [
-            Row(
-              children: [
-                BackButtonCustom(
-                  onBack: () {
-                    context.read<TripProvider>().costCalculate(trip, room);
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
             //booking details
             const TitleText(title: 'Booking Details'),
             BookingDetailsCard(trip: trip, room: room),

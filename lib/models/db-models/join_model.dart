@@ -62,5 +62,4 @@ JoinModel copyWith({  String? tripId,
     map['__v'] = v;
     return map;
   }
-
 }

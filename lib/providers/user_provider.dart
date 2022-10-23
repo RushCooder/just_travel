@@ -48,9 +48,16 @@ class UserProvider extends ChangeNotifier {
 
   /*
   * Database query*/
+
+  // fetch user by email
   Future<void> fetchUserByEmail(String email) async {
     user = await UserApi.fetchUserByEmail(email);
     notifyListeners();
+  }
+
+  // fetch user by user id
+  Future<UserModel?> fetchUserByUserId(String userId) async {
+    return await UserApi.fetchUserByUserId(userId);
   }
 
   // update user

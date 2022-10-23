@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:just_travel/models/db-models/trip_model.dart';
+import 'package:just_travel/views/widgets/network_image_loader.dart';
 import '../../utils/constants/urls.dart';
 
 class ImageGridView extends StatelessWidget {
@@ -21,10 +22,11 @@ class ImageGridView extends StatelessWidget {
             mainAxisCellCount: 2,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                '${baseUrl}uploads/${imageList[1]}',
-                fit: BoxFit.cover,
-              ),
+              child: NetworkImageLoader(image: '${baseUrl}uploads/${imageList[1]}'),
+              // child: Image.network(
+              //   '${baseUrl}uploads/${imageList[1]}',
+              //   fit: BoxFit.cover,
+              // ),
             ),
           ),
           StaggeredGridTile.count(
@@ -32,10 +34,11 @@ class ImageGridView extends StatelessWidget {
             mainAxisCellCount: 1,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                '${baseUrl}uploads/${imageList[2]}',
-                fit: BoxFit.cover,
-              ),
+              child: NetworkImageLoader(image: '${baseUrl}uploads/${imageList[2]}'),
+              // child: Image.network(
+              //   '${baseUrl}uploads/${imageList[2]}',
+              //   fit: BoxFit.cover,
+              // ),
             ),
           ),
           StaggeredGridTile.count(
@@ -43,10 +46,11 @@ class ImageGridView extends StatelessWidget {
             mainAxisCellCount: 1,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child: Image.network(
-                '${baseUrl}uploads/${imageList[3]}',
-                fit: BoxFit.cover,
-              ),
+              child: NetworkImageLoader(image: '${baseUrl}uploads/${imageList[3]}'),
+              // child: Image.network(
+              //   '${baseUrl}uploads/${imageList[3]}',
+              //   fit: BoxFit.cover,
+              // ),
             ),
           ),
           StaggeredGridTile.count(
@@ -54,10 +58,11 @@ class ImageGridView extends StatelessWidget {
             mainAxisCellCount: 1,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child: Image.network(
-                '${baseUrl}uploads/${imageList[0]}',
-                fit: BoxFit.cover,
-              ),
+              child: NetworkImageLoader(image: '${baseUrl}uploads/${imageList[0]}'),
+              // child: Image.network(
+              //   '${baseUrl}uploads/${imageList[0]}',
+              //   fit: BoxFit.cover,
+              // ),
             ),
           ),
         ],

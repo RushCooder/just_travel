@@ -26,7 +26,7 @@ class _LauncherPageState extends State<LauncherPage> {
 
     Future.delayed(
       Duration.zero,
-      () {
+      () async {
         // Navigator.pushNamedAndRemoveUntil(
         //           context, HomePage.routeName, (route) => false);
 
@@ -35,7 +35,7 @@ class _LauncherPageState extends State<LauncherPage> {
         print('current user: ${authProvider.getCurrentUser()}');
         if (authProvider.getCurrentUser() != null) {
           try {
-            userProvider
+           await  userProvider
                 .fetchUserByEmail(authProvider.getCurrentUser()!.email!);
             Navigator.pushNamedAndRemoveUntil(
                 context, HomePage.routeName, (route) => false);

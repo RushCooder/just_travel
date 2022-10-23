@@ -77,7 +77,7 @@ class TripTitleCard extends StatelessWidget {
                       ),
                       Text(
                         getFormattedDateTime(
-                            dateTime: trip.schedule!, pattern: 'MMM dd, yyyy'),
+                            dateTime: trip.startDate!, pattern: 'MMM dd, yyyy'),
                         style: Theme.of(context)
                             .textTheme
                             .caption

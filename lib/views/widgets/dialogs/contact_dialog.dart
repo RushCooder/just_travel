@@ -77,7 +77,7 @@ void contactDialog(BuildContext context) {
                   controller: mobileNumberTextEditingController,
                   icon: Icons.phone,
                   labelText: 'Mobile Number',
-                  isMobile: true,
+                  hintText: '+8801XXXXXXXXX',
                   textInputType: TextInputType.phone,
                 ),
                 const SizedBox(

@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:just_travel/models/db-models/message_group_model.dart';
 import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/models/db-models/trip_model.dart';
 import 'package:just_travel/views/pages/auth/signin/signin_page.dart';
 import 'package:just_travel/views/pages/auth/signup/signup_page.dart';
+import 'package:just_travel/views/pages/chat-page/chat_page.dart';
 import 'package:just_travel/views/pages/confirm-page/confirm_page.dart';
 import 'package:just_travel/views/pages/error/error_page.dart';
 import 'package:just_travel/views/pages/home-page/home_page.dart';
+import 'package:just_travel/views/pages/inbox-page/inbox_page.dart';
+import 'package:just_travel/views/pages/inbox-page/inbox_page.dart';
 import 'package:just_travel/views/pages/launcher_page.dart';
 import 'package:just_travel/views/pages/my-trips-page/my_trips_page.dart';
+import 'package:just_travel/views/pages/profile-page/profile_page.dart';
 import 'package:just_travel/views/pages/trip-details-page/trip_details_page.dart';
 
 class RouteGenerator {
@@ -77,6 +82,36 @@ class RouteGenerator {
 
       /*
     * ============= My trip route start ============*/
+
+    /*
+    * ============= Profile route start ============*/
+      case ProfilePage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const ProfilePage(),
+        );
+
+      /*
+    * ============= Profile route start ============*/
+
+    /*
+    * ============= Message route start ============*/
+      case InboxPage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const InboxPage(),
+        );
+
+      /*
+    * ============= Message route start ============*/
+
+    /*
+    * ============= Message route start ============*/
+      case ChattingPage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => ChattingPage(messageGroup: args as MessageGroupModel),
+        );
+
+      /*
+    * ============= Message route start ============*/
 
 
       default:

@@ -42,7 +42,7 @@ class BookingDetailsCard extends StatelessWidget {
             },
           ),
           ItemTile(
-            title: getFormattedDateTime(dateTime: trip.schedule!),
+            title: getFormattedDateTime(dateTime: trip.startDate!),
             subTitle: 'Date',
             cost: trip.cost!,
             icon: Icons.date_range,

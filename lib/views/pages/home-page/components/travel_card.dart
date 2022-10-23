@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_travel/views/widgets/network_image_loader.dart';
 
 import '../../../widgets/app_text.dart';
 
@@ -27,11 +28,10 @@ class TravelCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(18),
-            child: Image.network(
-              image,
+            child: NetworkImageLoader(
+              image: image,
               height: 150,
               width: MediaQuery.of(context).size.width * 0.7,
-              fit: BoxFit.cover,
             ),
           ),
           SizedBox(

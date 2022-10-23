@@ -9,7 +9,7 @@ String getFormattedDateTime(
   return DateFormat(pattern).format(dt);
 }
 
-//snackbar message
+//show toast message
 showMsg(BuildContext context, String msg) =>
     Fluttertoast.showToast(
         msg: msg,

@@ -28,7 +28,7 @@ class CheckUserTrip extends StatelessWidget {
               : onTrue;
         }
 
-        return const CircularProgressIndicator();
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }

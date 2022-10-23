@@ -38,9 +38,9 @@ class UpComingTrip extends StatelessWidget {
                     location: tripProvider.tripList[index].city!,
                     image:
                         '${baseUrl}uploads/${tripProvider.tripList[index].photos![0]}',
-                    date: tripProvider.tripList[index].schedule != null
+                    date: tripProvider.tripList[index].startDate != null
                         ? getFormattedDateTime(
-                            dateTime: tripProvider.tripList[index].schedule!)
+                            dateTime: tripProvider.tripList[index].startDate!)
                         : '00/00/0000',
                   ),
                 ),

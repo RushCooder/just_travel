@@ -27,12 +27,16 @@ class TripDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: true,
       // appBar: appbarLayout(
       //   title: 'Details',
       //   backgroundColor: Colors.black.withOpacity(0.7),
       //   systemOverlayStyle: StatusBarTheme.statusBarDart,
       // ),
+      appBar: AppBar(
+        title: const Text('Details'),
+        elevation: 0,
+      ),
       body: SafeArea(
         child: Center(
           child: FutureBuilder<TripModel?>(
@@ -45,18 +49,19 @@ class TripDetailsPage extends StatelessWidget {
                   padding: const EdgeInsets.all(0),
                   children: [
                     // cover image
-                    Stack(
-                      children: [
-                        CoverPhoto(imagePath: trip.photos![0]),
-                        Positioned(
-                          // top: 35,
-                          left: 10,
-                          child: BackButtonCustom(onBack: () {
-                            Navigator.pop(context);
-                          }),
-                        ),
-                      ],
-                    ),
+                    CoverPhoto(imagePath: trip.photos![0]),
+                    // Stack(
+                    //   children: [
+                    //     CoverPhoto(imagePath: trip.photos![0]),
+                    //     Positioned(
+                    //       // top: 35,
+                    //       left: 10,
+                    //       child: BackButtonCustom(onBack: () {
+                    //         Navigator.pop(context);
+                    //       }),
+                    //     ),
+                    //   ],
+                    // ),
 
                     // trip title card
                     TripTitleCard(trip: trip),

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
 class AppBarTrailing extends StatelessWidget {
-  const AppBarTrailing({Key? key}) : super(key: key);
+  final Widget child;
+  double radius;
+  AppBarTrailing({required this.child, required this.radius,  Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 15),
       child: CircleAvatar(
-        radius: 20,
+        radius: radius,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child: Image.asset(
-            'images/profile.jpg',
-            fit: BoxFit.cover,
-          ),
+          clipBehavior: Clip.antiAlias,
+          borderRadius: BorderRadius.circular(radius),
+          child: child,
         ),
       ),
     );

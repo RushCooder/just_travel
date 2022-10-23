@@ -6,14 +6,13 @@ import 'package:just_travel/views/pages/trip-details-page/trip_details_page.dart
 
 class TripListCard extends StatelessWidget {
   final TripModel trip;
-  const TripListCard({required this.trip, Key? key}) : super(key: key);
+  VoidCallback? onPressed;
+  TripListCard({required this.trip, this.onPressed,  Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, TripDetailsPage.routeName, arguments: trip.id);
-      },
+      onTap: onPressed,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 5,
@@ -28,7 +27,7 @@ class TripListCard extends StatelessWidget {
             ),
             title: Text(trip.placeName!),
             subtitle: Text(
-              getFormattedDateTime(dateTime: trip.schedule!),
+              getFormattedDateTime(dateTime: trip.startDate!),
             ),
           ),
         ),
