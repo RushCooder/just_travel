@@ -87,7 +87,6 @@ class UserModel {
     if (mobile != null) {
       map['mobile'] = mobile?.toJson();
     }
-    map['_id'] = id;
     map['name'] = name;
     map['city'] = city;
     map['division'] = division;

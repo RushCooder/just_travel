@@ -15,15 +15,16 @@ class UserApi {
 
     try {
       StreamedResponse response = await request.send();
-
-      if (response.statusCode == 200) {
-        var enCodedDate = await response.stream.bytesToString();
+      var enCodedDate = await response.stream.bytesToString();
+      print('Created data: $enCodedDate');
+      if (response.statusCode == 201) {
+        // var enCodedDate = await response.stream.bytesToString();
         var data = json.decode(enCodedDate);
         UserModel user = UserModel.fromJson(data);
         print('create user: $user');
         return user;
       } else {
-        throw Error();
+        throw response.reasonPhrase.toString();
       }
     } catch (error) {
       print('create user error: $error');

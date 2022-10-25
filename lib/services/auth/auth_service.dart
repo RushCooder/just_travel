@@ -8,15 +8,14 @@ class AuthService {
   static User? get user => _auth.currentUser;
 
   // delete user
-  static Future<bool> deleteUser () async{
-    try{
+  static Future<bool> deleteUser() async {
+    try {
       await user?.delete();
       return true;
-    }catch(error){
+    } catch (error) {
       print('delete firebase auth user: $error');
       return false;
     }
-
   }
 
   // reload user
@@ -64,7 +63,7 @@ class AuthService {
 
   // phone number verification
   static Future<void> verifyPhoneNumber(
-      String phoneNumber, Function(String vId) codeSent) async {
+      String phoneNumber, Function(String vId) codeSent, Function(String errorMsg) onError) async {
     await _auth.verifyPhoneNumber(
       timeout: const Duration(seconds: 60),
       phoneNumber: phoneNumber,
@@ -72,7 +71,10 @@ class AuthService {
         print('phone number verified');
         print('phone number verified: ${credential}');
       },
-      verificationFailed: (FirebaseAuthException e) {},
+      verificationFailed: (FirebaseAuthException e) {
+        print('verification failed: $e');
+        onError(e.message!);
+      },
       codeSent: (String verificationId, int? resendToken) {
         print('verify id sent: $verificationId');
         codeSent(verificationId);

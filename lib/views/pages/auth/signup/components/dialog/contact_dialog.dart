@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
 import 'package:just_travel/providers/user_provider.dart';
+import 'package:just_travel/utils/constants/urls.dart';
 import 'package:just_travel/utils/helper_functions.dart';
-import 'package:just_travel/views/widgets/dialogs/otpp_dialog.dart';
+import 'package:just_travel/views/pages/auth/signup/components/dialog/otpp_dialog.dart';
+import 'package:just_travel/views/widgets/custom_form_field.dart';
 import 'package:just_travel/views/widgets/dialogs/user_image_picker_dialog.dart';
 import 'package:just_travel/views/widgets/loading_widget.dart';
 import 'package:just_travel/views/widgets/upload_image_card.dart';
 import 'package:provider/provider.dart';
 
-import '../../../utils/constants/urls.dart';
-import '../custom_form_field.dart';
 
 void contactDialog(BuildContext context) {
   final mobileNumberTextEditingController = TextEditingController();

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
@@ -8,16 +10,16 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
 void otpDialog(BuildContext context, String phoneNumber) async {
-  context.read<AuthProvider>().verifyPhoneNumber(
-    phoneNumber,
-    (vId) {
-      // stopping loading dialog
-      Navigator.pop(context);
+  context.read<AuthProvider>().verifyPhoneNumber(phoneNumber, (vId) {
+    // stopping loading dialog
+    Navigator.pop(context);
 
-      //showing otp dialog
-      showOtpDialog(context, vId);
-    },
-  );
+    //showing otp dialog
+    showOtpDialog(context, vId);
+  }, (errorMsg) {
+    showMsg(context, errorMsg);
+    Navigator.pop(context);
+  });
 }
 
 void showOtpDialog(BuildContext context, String vId) {
@@ -57,14 +59,21 @@ void showOtpDialog(BuildContext context, String vId) {
                   await provider.matchingSmsCode(vId, codeController.text);
               if (otpVerified) {
                 // await authProvider.deleteUser();
-               bool isAuth = await provider.authenticate(isSignUp: true);
-               if(isAuth){
-                 // if (await provider.emailVerification()){
-                   Navigator.pushNamedAndRemoveUntil(
-                       context, LauncherPage.routeName, (route) => false);
-                 // }
-               }
+                bool isAuth = await provider.authenticate(isSignUp: true);
+                if (isAuth) {
+                  // if (await provider.emailVerification()){
+                  try{
+                    await provider.storeInDataBase();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, LauncherPage.routeName, (route) => false);
+                  }catch(e){
+                    showMsg(context, e.toString());
+                  }
 
+
+
+                  // }
+                }
               } else {
                 Navigator.pop(context);
                 showMsg(context, 'Wrong OTP');

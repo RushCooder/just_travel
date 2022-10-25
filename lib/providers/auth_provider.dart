@@ -122,8 +122,8 @@ class AuthProvider extends ChangeNotifier {
   }
 
 // checking phone number verification. this method will return vId
-  verifyPhoneNumber(String phoneNumber, Function(String vId) codeSent) async {
-    await AuthService.verifyPhoneNumber(phoneNumber, codeSent);
+  Future<void> verifyPhoneNumber(String phoneNumber, Function(String vId) codeSent, Function(String errorMsg) onError) async {
+    await AuthService.verifyPhoneNumber(phoneNumber, codeSent, onError);
     // notifyListeners();
     // return vId;
   }
@@ -133,7 +133,7 @@ class AuthProvider extends ChangeNotifier {
       if (await AuthService.matchingSmsCode(vId, smsCode)) {
         //mobile verification true and store in database
         isMobileVerified = true;
-        await storeInDataBase();
+        // await storeInDataBase();
         signOut();
         return true;
       } else {
@@ -192,7 +192,7 @@ class AuthProvider extends ChangeNotifier {
         return true;
       } else {
         AuthService.signOut();
-        throw 'Credential error';
+        throw 'The password is invalid or the user does not have a password';
       }
     } on FirebaseAuthException catch (e) {
       setError(e.message!);
@@ -265,8 +265,25 @@ class AuthProvider extends ChangeNotifier {
       );
 
       print('new user: $newUser');
-      createdUser = await UserApi.createUser(newUser);
-      await AuthService.signIn(newUser.email!.emailId!, password!);
+      try{
+        createdUser = await UserApi.createUser(newUser);
+        if (createdUser == null) {
+          deleteUser();
+          signOut();
+          throw 'Failed to create user';
+        }
+        print('');
+        print('');
+        print('new created user: $createdUser');
+        print('');
+        print('');
+      }catch(e){
+
+        print('error for: $e');
+        rethrow;
+
+      }
+
     }
 
     // return createdUser;

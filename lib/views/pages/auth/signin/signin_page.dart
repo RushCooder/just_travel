@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
+import 'package:just_travel/utils/helper_functions.dart';
 import 'package:just_travel/views/pages/launcher_page.dart';
 import 'package:just_travel/views/widgets/custom_form_field.dart';
 import 'package:just_travel/views/widgets/loading_widget.dart';
@@ -93,13 +94,20 @@ class SignInPage extends StatelessWidget {
                             .authenticate(isSignUp: false)
                             .then(
                           (value) {
-                            print('Login success');
-                            Navigator.pushNamedAndRemoveUntil(context,
-                                LauncherPage.routeName, (route) => false);
+                            if (value){
+                              print('Login success');
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  LauncherPage.routeName, (route) => false);
+                            }else{
+                              showMsg(context, 'Authentication Error');
+                            }
+
                           },
                         ).onError(
                           (error, stackTrace) {
                             print('error: $error');
+                            Navigator.pop(context);
+                            showMsg(context, error.toString());
                           },
                         );
                       }
