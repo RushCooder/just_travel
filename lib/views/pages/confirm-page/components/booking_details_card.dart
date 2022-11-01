@@ -3,6 +3,7 @@ import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/models/db-models/trip_model.dart';
 import 'package:just_travel/providers/hotel_provider.dart';
 import 'package:just_travel/utils/helper_functions.dart';
+import 'package:just_travel/views/pages/confirm-page/components/room_tile.dart';
 import 'package:provider/provider.dart';
 
 import 'item_tile.dart';
@@ -41,8 +42,13 @@ class BookingDetailsCard extends StatelessWidget {
               return const CircularProgressIndicator();
             },
           ),
+          RoomTile(
+            subTitle: 'Room',
+            room: room,
+            icon: Icons.room_service,
+          ),
           ItemTile(
-            title: getFormattedDateTime(dateTime: trip.startDate!),
+            title: '${getFormattedDateTime(dateTime: trip.startDate!)} To ${getFormattedDateTime(dateTime: trip.endDate!)}',
             subTitle: 'Date',
             cost: trip.cost!,
             icon: Icons.date_range,

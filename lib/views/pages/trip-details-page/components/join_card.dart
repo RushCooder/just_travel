@@ -51,13 +51,13 @@ class JoinCard extends StatelessWidget {
                               .copyWith(fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Text(
-                        '/Person',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6!
-                            .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
-                      ),
+                      // Text(
+                      //   '/Person',
+                      //   style: Theme.of(context)
+                      //       .textTheme
+                      //       .headline6!
+                      //       .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                      // ),
                     ],
                   ),
                 ],

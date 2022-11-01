@@ -23,6 +23,7 @@ class TripDetailsPage extends StatelessWidget {
   final String id;
   TripDetailsPage({required this.id, Key? key}) : super(key: key);
   RoomModel? roomModel;
+  num? numberOfTravellers;
 
   @override
   Widget build(BuildContext context) {
@@ -93,12 +94,17 @@ class TripDetailsPage extends StatelessWidget {
                             height: 10,
                           ),
                           HotelListTile(
-                            onSelectRoom: (roomModel) {
+                            trip: trip,
+                            onSelectRoom: (roomModel, numberOfTravellers) {
                               this.roomModel = roomModel;
+                              this.numberOfTravellers = numberOfTravellers;
                               context
                                   .read<TripProvider>()
-                                  .costCalculate(trip, roomModel);
+                                  .costCalculate(trip, numberOfTravellers, roomModel);
                             },
+                            // onSelectRoom: (roomModel, t) {
+                            //
+                            // },
                           ),
                           const SizedBox(
                             height: 10,
@@ -119,7 +125,7 @@ class TripDetailsPage extends StatelessWidget {
                                   Navigator.pushNamed(
                                     context,
                                     ConfirmPage.routeName,
-                                    arguments: [trip, roomModel!],
+                                    arguments: [trip, roomModel!, numberOfTravellers],
                                   );
                                 }
                               : null,

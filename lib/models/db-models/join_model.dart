@@ -3,7 +3,10 @@ class JoinModel {
       this.tripId, 
       this.userId, 
       this.roomId, 
-      this.joinDate, 
+      this.numberOfTravellers, 
+      this.startDate, 
+      this.endDate, 
+      this.status, 
       this.totalCost, 
       this.id, 
       this.createdAt, 
@@ -14,7 +17,10 @@ class JoinModel {
     tripId = json['tripId'];
     userId = json['userId'];
     roomId = json['roomId'];
-    joinDate = json['joinDate'];
+    numberOfTravellers = json['numberOfTravellers'];
+    startDate = json['startDate'];
+    endDate = json['endDate'];
+    status = json['status'];
     totalCost = json['totalCost'];
     id = json['_id'];
     createdAt = json['createdAt'];
@@ -24,7 +30,10 @@ class JoinModel {
   String? tripId;
   String? userId;
   String? roomId;
-  num? joinDate;
+  num? numberOfTravellers;
+  num? startDate;
+  num? endDate;
+  String? status;
   num? totalCost;
   String? id;
   String? createdAt;
@@ -33,7 +42,10 @@ class JoinModel {
 JoinModel copyWith({  String? tripId,
   String? userId,
   String? roomId,
-  num? joinDate,
+  num? numberOfTravellers,
+  num? startDate,
+  num? endDate,
+  String? status,
   num? totalCost,
   String? id,
   String? createdAt,
@@ -42,7 +54,10 @@ JoinModel copyWith({  String? tripId,
 }) => JoinModel(  tripId: tripId ?? this.tripId,
   userId: userId ?? this.userId,
   roomId: roomId ?? this.roomId,
-  joinDate: joinDate ?? this.joinDate,
+  numberOfTravellers: numberOfTravellers ?? this.numberOfTravellers,
+  startDate: startDate ?? this.startDate,
+  endDate: endDate ?? this.endDate,
+  status: status ?? this.status,
   totalCost: totalCost ?? this.totalCost,
   id: id ?? this.id,
   createdAt: createdAt ?? this.createdAt,
@@ -54,12 +69,15 @@ JoinModel copyWith({  String? tripId,
     map['tripId'] = tripId;
     map['userId'] = userId;
     map['roomId'] = roomId;
-    map['joinDate'] = joinDate;
+    map['numberOfTravellers'] = numberOfTravellers;
+    map['startDate'] = startDate;
+    map['endDate'] = endDate;
+    map['status'] = status;
     map['totalCost'] = totalCost;
-    map['_id'] = id;
     map['createdAt'] = createdAt;
     map['updatedAt'] = updatedAt;
     map['__v'] = v;
     return map;
   }
+
 }

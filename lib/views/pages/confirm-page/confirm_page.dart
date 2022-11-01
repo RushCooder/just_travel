@@ -1,15 +1,21 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/models/db-models/trip_model.dart';
 import 'package:just_travel/models/db-models/user_model.dart';
+import 'package:just_travel/providers/auth_provider.dart';
 import 'package:just_travel/providers/trip_provider.dart';
 import 'package:just_travel/providers/user_provider.dart';
 import 'package:just_travel/utils/helper_functions.dart';
+import 'package:just_travel/views/pages/auth/signup/components/dialog/verification_dialog.dart';
 import 'package:just_travel/views/pages/confirm-page/components/booking_details_card.dart';
 import 'package:just_travel/views/pages/confirm-page/components/payment_method_card.dart';
 import 'package:just_travel/views/pages/confirm-page/components/payment_now_button.dart';
 import 'package:just_travel/views/pages/confirm-page/components/payment_summary_card.dart';
 import 'package:just_travel/views/pages/confirm-page/components/title_text.dart';
+import 'package:just_travel/views/pages/error-page/error_page.dart';
+import 'package:just_travel/views/pages/success-page/success_page.dart';
 import 'package:just_travel/views/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +23,13 @@ class ConfirmPage extends StatelessWidget {
   static const routeName = '/home/trip-details-page/confirm-page';
   TripModel trip;
   RoomModel room;
+  num numberOfTravellers;
 
-  ConfirmPage({required this.trip, required this.room, Key? key})
+  ConfirmPage(
+      {required this.trip,
+      required this.room,
+      required this.numberOfTravellers,
+      Key? key})
       : super(key: key);
 
   @override
@@ -40,7 +51,8 @@ class ConfirmPage extends StatelessWidget {
 
             //  payment summary
             const TitleText(title: 'Payment Summary'),
-            PaymentSummaryCard(trip: trip, room: room),
+            PaymentSummaryCard(
+                trip: trip, room: room, numberOfTravellers: numberOfTravellers),
             const SizedBox(
               height: 10,
             ),
@@ -52,22 +64,24 @@ class ConfirmPage extends StatelessWidget {
             // payment now button
             PaymentNowButton(
               onPressed: () {
-                showLoadingDialog(context);
                 UserModel user = context.read<UserProvider>().user!;
-                context
-                    .read<TripProvider>()
-                    .joinTrip(trip, room, user)
-                    .then((value) {
-                  context.read<TripProvider>().resetValue();
-                  showMsg(context, 'Success');
-                  int count = 0;
-                  Navigator.popUntil(context, (route) {
-                    return count++ == 3;
+
+                if (user.email?.isVerified == false) {
+                  showMsg(context, 'Please verify your email');
+                } else {
+                  context
+                      .read<TripProvider>()
+                      .joinTrip(trip, room, user, numberOfTravellers)
+                      .then((value) {
+                    context.read<TripProvider>().reset();
+                    showMsg(context, 'Success');
+                    Navigator.pushNamed(context, SuccessPage.routeName);
+                  }).onError((error, stackTrace) {
+                    context.read<TripProvider>().reset();
+                    showMsg(context, 'Joining failed');
+                    Navigator.pushNamed(context, ErrorPage.routeName);
                   });
-                }).onError((error, stackTrace) {
-                  context.read<TripProvider>().resetValue();
-                  showMsg(context, 'Joining failed');
-                });
+                }
               },
             ),
           ],

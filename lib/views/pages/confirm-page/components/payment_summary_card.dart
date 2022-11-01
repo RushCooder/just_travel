@@ -8,8 +8,9 @@ import 'package:provider/provider.dart';
 class PaymentSummaryCard extends StatelessWidget {
   final TripModel trip;
   final RoomModel room;
+  final num numberOfTravellers;
 
-  const PaymentSummaryCard({required this.trip, required this.room, Key? key})
+  const PaymentSummaryCard({required this.trip, required this.room, required this.numberOfTravellers, Key? key})
       : super(key: key);
 
   @override
@@ -21,7 +22,7 @@ class PaymentSummaryCard extends StatelessWidget {
           children: [
             ListTile(
               title: const Text('Package With Transport'),
-              trailing: Text('$currencySymbol${trip.cost}'),
+              trailing: Text('$currencySymbol${numberOfTravellers}x${trip.cost}'),
             ),
             ListTile(
               title: const Text('Hotel & Resort'),

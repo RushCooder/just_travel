@@ -23,18 +23,18 @@ class TripProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void resetValue() {
+  void reset() {
     isRoomSelected = false;
     totalCost = null;
     notifyListeners();
   }
 
   // calculating total cost
-  void costCalculate(TripModel trip, RoomModel? room) {
+  void costCalculate(TripModel trip, num numberOfTravellers, RoomModel? room) {
     if (room == null) {
       totalCost = trip.cost;
     } else {
-      totalCost = (trip.cost! + (room.price! ~/ room.maxCapacity!));
+      totalCost = ((trip.cost! * numberOfTravellers) + room.price!);
     }
 
     notifyListeners();
@@ -43,13 +43,17 @@ class TripProvider extends ChangeNotifier {
   /* ========================== Insertion ====================== ***
   * */
   // join trip
-  Future<void> joinTrip(TripModel trip, RoomModel room, UserModel user) async {
+  Future<void> joinTrip(TripModel trip, RoomModel room, UserModel user, num numberOfTravellers) async {
     JoinModel joinModel = JoinModel(
         tripId: trip.id,
         roomId: room.id,
         userId: user.id,
-        joinDate: DateTime.now().millisecondsSinceEpoch,
+        numberOfTravellers: numberOfTravellers,
+        status: 'Pending',
+        startDate: trip.startDate,
+        endDate: trip.endDate,
         totalCost: totalCost);
+    print('trip join: $joinModel');
     isJoined = await TripApi.joinTrip(joinModel);
     notifyListeners();
   }
@@ -72,18 +76,18 @@ class TripProvider extends ChangeNotifier {
   Future<TripModel?> getTripByTripId(String tripId) async {
     tripModel = await TripApi.getTripByTripId(tripId);
     notifyListeners();
-    costCalculate(tripModel!, null);
+    costCalculate(tripModel!, 1, null);
     return tripModel;
   }
 
   // fetching trip by userId tripId
-  Future<bool> getTripByUserIdTripId(String userId, String tripId) async{
+  Future<bool> getTripByUserIdTripId(String userId, String tripId) async {
     TripModel? trip = await TripApi.getTripByUserIdTripId(userId, tripId);
     return trip?.placeName != null;
   }
 
   // fetching trip by userId
-  Future<void>getTripByUserId(String userId) async{
+  Future<void> getTripByUserId(String userId) async {
     myTripsList = await TripApi.getTripsByUserId(userId);
     notifyListeners();
   }

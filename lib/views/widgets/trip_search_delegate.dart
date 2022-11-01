@@ -93,7 +93,7 @@ class TripSearchDelegate extends SearchDelegate<TripModel?> {
     final tripList = context.read<TripProvider>().tripList;
 
     final filteredList = query.isEmpty
-        ? tripList
+        ? []
         : tripList
             .where(
               (trip) => trip.placeName!.toLowerCase().startsWith(

@@ -46,7 +46,6 @@ MessageGroupModel copyWith({  String? id,
 );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['_id'] = id;
     map['groupName'] = groupName;
     map['trip'] = trip;
     map['members'] = members;
