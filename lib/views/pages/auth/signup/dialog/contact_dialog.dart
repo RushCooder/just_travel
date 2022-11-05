@@ -3,13 +3,16 @@ import 'package:just_travel/providers/auth_provider.dart';
 import 'package:just_travel/providers/user_provider.dart';
 import 'package:just_travel/utils/constants/urls.dart';
 import 'package:just_travel/utils/helper_functions.dart';
-import 'package:just_travel/views/pages/auth/signup/components/dialog/otpp_dialog.dart';
+import 'package:just_travel/views/pages/auth/signup/components/district_dropdown.dart';
+import 'package:just_travel/views/pages/auth/signup/components/division_dropdown.dart';
+import 'package:just_travel/views/pages/auth/signup/dialog/otpp_dialog.dart';
 import 'package:just_travel/views/widgets/custom_form_field.dart';
 import 'package:just_travel/views/widgets/dialogs/user_image_picker_dialog.dart';
 import 'package:just_travel/views/widgets/loading_widget.dart';
 import 'package:just_travel/views/widgets/upload_image_card.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../providers/districts_provider.dart';
 
 void contactDialog(BuildContext context) {
   final mobileNumberTextEditingController = TextEditingController();
@@ -84,20 +87,12 @@ void contactDialog(BuildContext context) {
                   height: 30,
                 ),
                 //current city
-                CustomFormField(
-                  controller: cityTextEditingController,
-                  icon: Icons.location_city,
-                  labelText: 'Current City',
-                ),
+                DivisionDropDown(),
                 const SizedBox(
                   height: 30,
                 ),
                 // current division
-                CustomFormField(
-                  controller: divisionTextEditingController,
-                  icon: Icons.living,
-                  labelText: 'Current Division',
-                ),
+                DistrictDropDown(),
               ],
             ),
           ),
@@ -108,15 +103,18 @@ void contactDialog(BuildContext context) {
           onPressed: () {
             if (formKey.currentState!.validate() &&
                 context.read<UserProvider>().userImagePath != null) {
+              final disProvider = context.read<DistrictsProvider>();
               context.read<AuthProvider>().setContactInfo(
-                    context.read<UserProvider>().userImagePath!,
-                    mobileNumberTextEditingController.text.trim(),
-                    cityTextEditingController.text.trim(),
-                    divisionTextEditingController.text.trim(),
+                    imagePath: context.read<UserProvider>().userImagePath!,
+                    mobileNumber: mobileNumberTextEditingController.text.trim(),
+                    division: disProvider.division!.division!,
+                    district: disProvider.district!.district!,
                   );
+
               showLoadingDialog(context);
               otpDialog(context, mobileNumberTextEditingController.text.trim());
-            }else{
+              disProvider.reset();
+            } else {
               showMsg(context, 'Please upload image');
             }
           },

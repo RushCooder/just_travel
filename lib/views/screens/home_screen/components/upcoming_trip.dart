@@ -34,7 +34,7 @@ class UpComingTrip extends StatelessWidget {
                   },
                   child: TripCard(
                     title: tripProvider.tripList[index].placeName!,
-                    location: tripProvider.tripList[index].city!,
+                    location: tripProvider.tripList[index].district!,
                     image:
                         '${baseUrl}uploads/${tripProvider.tripList[index].photos![0]}',
                     date: tripProvider.tripList[index].startDate != null

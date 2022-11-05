@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/models/db-models/trip_model.dart';
+import 'package:just_travel/providers/join_trip_provider.dart';
 import 'package:just_travel/providers/trip_provider.dart';
 import 'package:just_travel/utils/constants/symbols.dart';
 import 'package:provider/provider.dart';
@@ -42,22 +43,15 @@ class JoinCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Consumer<TripProvider>(
+                      Consumer<JoinTripProvider>(
                         builder:(context, provider, child) =>  Text(
-                          '$currencySymbol${provider.totalCost}',
+                          '$currencySymbol${provider.totalCost ?? tripModel.cost}',
                           style: Theme.of(context)
                               .textTheme
                               .headline5!
                               .copyWith(fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                       ),
-                      // Text(
-                      //   '/Person',
-                      //   style: Theme.of(context)
-                      //       .textTheme
-                      //       .headline6!
-                      //       .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
-                      // ),
                     ],
                   ),
                 ],

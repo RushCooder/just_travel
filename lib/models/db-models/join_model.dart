@@ -1,17 +1,18 @@
 class JoinModel {
   JoinModel({
-      this.tripId, 
-      this.userId, 
-      this.roomId, 
-      this.numberOfTravellers, 
-      this.startDate, 
-      this.endDate, 
-      this.status, 
-      this.totalCost, 
-      this.id, 
-      this.createdAt, 
-      this.updatedAt, 
-      this.v,});
+    this.tripId,
+    this.userId,
+    this.roomId,
+    this.numberOfTravellers,
+    this.startDate,
+    this.endDate,
+    this.status,
+    this.totalCost,
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
+  });
 
   JoinModel.fromJson(dynamic json) {
     tripId = json['tripId'];
@@ -39,31 +40,34 @@ class JoinModel {
   String? createdAt;
   String? updatedAt;
   num? v;
-JoinModel copyWith({  String? tripId,
-  String? userId,
-  String? roomId,
-  num? numberOfTravellers,
-  num? startDate,
-  num? endDate,
-  String? status,
-  num? totalCost,
-  String? id,
-  String? createdAt,
-  String? updatedAt,
-  num? v,
-}) => JoinModel(  tripId: tripId ?? this.tripId,
-  userId: userId ?? this.userId,
-  roomId: roomId ?? this.roomId,
-  numberOfTravellers: numberOfTravellers ?? this.numberOfTravellers,
-  startDate: startDate ?? this.startDate,
-  endDate: endDate ?? this.endDate,
-  status: status ?? this.status,
-  totalCost: totalCost ?? this.totalCost,
-  id: id ?? this.id,
-  createdAt: createdAt ?? this.createdAt,
-  updatedAt: updatedAt ?? this.updatedAt,
-  v: v ?? this.v,
-);
+  JoinModel copyWith({
+    String? tripId,
+    String? userId,
+    String? roomId,
+    num? numberOfTravellers,
+    num? startDate,
+    num? endDate,
+    String? status,
+    num? totalCost,
+    String? id,
+    String? createdAt,
+    String? updatedAt,
+    num? v,
+  }) =>
+      JoinModel(
+        tripId: tripId ?? this.tripId,
+        userId: userId ?? this.userId,
+        roomId: roomId ?? this.roomId,
+        numberOfTravellers: numberOfTravellers ?? this.numberOfTravellers,
+        startDate: startDate ?? this.startDate,
+        endDate: endDate ?? this.endDate,
+        status: status ?? this.status,
+        totalCost: totalCost ?? this.totalCost,
+        id: id ?? this.id,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        v: v ?? this.v,
+      );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['tripId'] = tripId;
@@ -79,5 +83,4 @@ JoinModel copyWith({  String? tripId,
     map['__v'] = v;
     return map;
   }
-
 }

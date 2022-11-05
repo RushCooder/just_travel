@@ -118,7 +118,7 @@ class ProfilePage extends StatelessWidget {
           // city
           UserDetailsRow(
             fieldName: 'Current City: ',
-            value: userProvider.user!.city ?? 'No number added',
+            value: userProvider.user!.district ?? 'No number added',
           ),
           // division
           UserDetailsRow(

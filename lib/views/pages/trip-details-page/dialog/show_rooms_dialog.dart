@@ -4,9 +4,8 @@ import 'package:just_travel/models/db-models/trip_model.dart';
 import 'package:just_travel/providers/room_provider.dart';
 import 'package:just_travel/utils/constants/symbols.dart';
 import 'package:just_travel/utils/constants/urls.dart';
-import 'package:just_travel/views/pages/trip-details-page/dialog/roomDetailsDialog.dart';
+import 'package:just_travel/views/pages/trip-details-page/dialog/room_details_dialog.dart';
 import 'package:just_travel/views/widgets/network_image_loader.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 
 showRoomsDialog({

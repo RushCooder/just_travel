@@ -1,9 +1,6 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:just_travel/apis/user_api.dart';
 import 'package:just_travel/models/db-models/user_model.dart';
 
@@ -13,7 +10,7 @@ class AuthProvider extends ChangeNotifier {
   bool isObscure = true;
   bool isVisible = false;
   bool isSignOut = false;
-  String? name, email, password, imagePath, mobileNumber, city, division;
+  String? name, email, password, imagePath, mobileNumber, district, division;
 
   String errorMessage = '';
   Timer? timer;
@@ -26,8 +23,6 @@ class AuthProvider extends ChangeNotifier {
   void changeVisibility() {
     isVisible = !isVisible;
     isObscure = !isObscure;
-
-    print('obscure: $isObscure');
     notifyListeners();
   }
 
@@ -39,12 +34,16 @@ class AuthProvider extends ChangeNotifier {
   }
 
   //set sign up info
-  void setContactInfo(
-      String imagePath, String mobileNumber, String city, String division) {
+  void setContactInfo({
+    required String imagePath,
+    required String mobileNumber,
+    required String district,
+    required String division,
+  }) {
     this.imagePath = imagePath;
     this.mobileNumber = mobileNumber;
-    this.city = city;
     this.division = division;
+    this.district = district;
   }
 
   // reset section/*
@@ -63,7 +62,7 @@ class AuthProvider extends ChangeNotifier {
     password = null;
     imagePath = null;
     mobileNumber = null;
-    city = null;
+    district = null;
     division = null;
   }
 
@@ -99,41 +98,31 @@ class AuthProvider extends ChangeNotifier {
     timer!.cancel();
   }
 
-
-
-  Future<bool> deleteUser () async{
-    try{
+  Future<bool> deleteUser() async {
+    try {
       await AuthService.deleteUser();
       return true;
-    }catch(error){
+    } catch (error) {
       print('delete firebase auth user: $error');
       return false;
     }
-
   }
 
-
   // checking email is verified or not
-  Future<bool> checkEmailVerification() async{
+  Future<bool> checkEmailVerification() async {
     return await AuthService.checkIsVerified();
-    // ensureEmailVerified = await AuthService.checkIsVerified();
-    // notifyListeners();
-    // return ensureEmailVerified;
   }
 
 // checking phone number verification. this method will return vId
-  Future<void> verifyPhoneNumber(String phoneNumber, Function(String vId) codeSent, Function(String errorMsg) onError) async {
+  Future<void> verifyPhoneNumber(String phoneNumber,
+      Function(String vId) codeSent, Function(String errorMsg) onError) async {
     await AuthService.verifyPhoneNumber(phoneNumber, codeSent, onError);
-    // notifyListeners();
-    // return vId;
   }
 
   Future<bool> matchingSmsCode(String vId, String smsCode) async {
     try {
       if (await AuthService.matchingSmsCode(vId, smsCode)) {
-        //mobile verification true and store in database
         isMobileVerified = true;
-        // await storeInDataBase();
         signOut();
         return true;
       } else {
@@ -166,11 +155,10 @@ class AuthProvider extends ChangeNotifier {
   // SignUp user with email verification
   Future<bool> emailVerification() async {
     try {
-       if (await AuthService.emailVerification()){
-
-         return true;
-       }
-       throw 'Email not verified';
+      if (await AuthService.emailVerification()) {
+        return true;
+      }
+      throw 'Email not verified';
     } catch (error) {
       print(error);
       return false;
@@ -182,7 +170,6 @@ class AuthProvider extends ChangeNotifier {
     try {
       bool status = false;
       if (isSignUp) {
-        print('signup calling');
         status = await AuthService.signUp(email!, password!);
       } else {
         status = await AuthService.signIn(email!, password!);
@@ -204,15 +191,11 @@ class AuthProvider extends ChangeNotifier {
   Future<bool> signInWithGoogle() async {
     try {
       UserCredential userCredential = await AuthService.signInWithGoogle();
-      print('user credential: $userCredential');
       if (userCredential.user != null) {
         UserModel? registeredUser =
             await UserApi.fetchUserByEmail(userCredential.user!.email!);
-        print('registered user: ${registeredUser?.name}');
 
         if (registeredUser == null) {
-          print('creating new user');
-
           UserModel newUser = UserModel(
             name: userCredential.user!.displayName,
             email: Email(
@@ -248,7 +231,6 @@ class AuthProvider extends ChangeNotifier {
     // print('registered user: ${registeredUser?.name}');
     UserModel? createdUser;
     if (registeredUser == null) {
-      print('creating new user');
       UserModel newUser = UserModel(
         name: name,
         email: Email(
@@ -259,34 +241,27 @@ class AuthProvider extends ChangeNotifier {
           number: mobileNumber,
           isVerified: isMobileVerified,
         ),
-        city: city,
+        district: district,
         division: division,
         profileImage: imagePath,
       );
-
-      print('new user: $newUser');
-      try{
+      try {
         createdUser = await UserApi.createUser(newUser);
         if (createdUser == null) {
           deleteUser();
           signOut();
           throw 'Failed to create user';
         }
-        print('');
-        print('');
-        print('new created user: $createdUser');
-        print('');
-        print('');
-      }catch(e){
-
+      } catch (e) {
         print('error for: $e');
         rethrow;
-
       }
-
     }
+  }
 
-    // return createdUser;
+  // sending password reset email using forgotPassword
+  Future<bool> forgotPassword(String email) async {
+    return await AuthService.forgotPassword(email);
   }
 
   // this method will return current user info

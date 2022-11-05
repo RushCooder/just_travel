@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/models/db-models/message_group_model.dart';
 import 'package:just_travel/providers/message_provider.dart';
-import 'package:just_travel/views/pages/chat-page/chat_page.dart';
+import 'package:just_travel/views/pages/chat-page/chatting_page.dart';
 import 'package:provider/provider.dart';
 
 class InboxPage extends StatelessWidget {

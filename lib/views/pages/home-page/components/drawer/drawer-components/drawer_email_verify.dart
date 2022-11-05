@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
 import 'package:just_travel/providers/user_provider.dart';
-import 'package:just_travel/views/pages/auth/signup/components/dialog/verification_dialog.dart';
+import 'package:just_travel/views/pages/auth/signup/dialog/verification_dialog.dart';
 import 'package:provider/provider.dart';
 
 class DrawerEmailVerify extends StatelessWidget {

@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/models/db-models/trip_model.dart';
 import 'package:just_travel/models/db-models/user_model.dart';
-import 'package:just_travel/providers/auth_provider.dart';
+import 'package:just_travel/providers/join_trip_provider.dart';
 import 'package:just_travel/providers/trip_provider.dart';
 import 'package:just_travel/providers/user_provider.dart';
 import 'package:just_travel/utils/helper_functions.dart';
-import 'package:just_travel/views/pages/auth/signup/components/dialog/verification_dialog.dart';
 import 'package:just_travel/views/pages/confirm-page/components/booking_details_card.dart';
 import 'package:just_travel/views/pages/confirm-page/components/payment_method_card.dart';
 import 'package:just_travel/views/pages/confirm-page/components/payment_now_button.dart';
@@ -16,7 +15,6 @@ import 'package:just_travel/views/pages/confirm-page/components/payment_summary_
 import 'package:just_travel/views/pages/confirm-page/components/title_text.dart';
 import 'package:just_travel/views/pages/error-page/error_page.dart';
 import 'package:just_travel/views/pages/success-page/success_page.dart';
-import 'package:just_travel/views/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
 class ConfirmPage extends StatelessWidget {
@@ -70,14 +68,16 @@ class ConfirmPage extends StatelessWidget {
                   showMsg(context, 'Please verify your email');
                 } else {
                   context
-                      .read<TripProvider>()
+                      .read<JoinTripProvider>()
                       .joinTrip(trip, room, user, numberOfTravellers)
                       .then((value) {
                     context.read<TripProvider>().reset();
+                    context.read<JoinTripProvider>().reset();
                     showMsg(context, 'Success');
                     Navigator.pushNamed(context, SuccessPage.routeName);
                   }).onError((error, stackTrace) {
                     context.read<TripProvider>().reset();
+                    context.read<JoinTripProvider>().reset();
                     showMsg(context, 'Joining failed');
                     Navigator.pushNamed(context, ErrorPage.routeName);
                   });

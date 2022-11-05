@@ -5,8 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:just_travel/providers/auth_provider.dart';
+import 'package:just_travel/providers/districts_provider.dart';
 import 'package:just_travel/providers/hotel_provider.dart';
+import 'package:just_travel/providers/join_trip_provider.dart';
 import 'package:just_travel/providers/message_provider.dart';
+import 'package:just_travel/providers/review_provider.dart';
 import 'package:just_travel/providers/room_provider.dart';
 import 'package:just_travel/providers/trip_provider.dart';
 import 'package:just_travel/providers/user_provider.dart';
@@ -22,18 +25,7 @@ Future<void> main() async {
   if (!kIsWeb) {
     await Firebase.initializeApp();
   } else {
-    await Firebase.initializeApp(
-      // options: const FirebaseOptions(
-      //   apiKey: 'AIzaSyAgUhHU8wSJgO5MVNy95tMT07NEjzMOfz0',
-      //   appId: '1:448618578101:web:0b650370bb29e29cac3efc',
-      //   messagingSenderId: '448618578101',
-      //   projectId: 'react-native-firebase-testing',
-      //   authDomain: 'react-native-firebase-testing.firebaseapp.com',
-      //   databaseURL: 'https://react-native-firebase-testing.firebaseio.com',
-      //   storageBucket: 'react-native-firebase-testing.appspot.com',
-      //   measurementId: 'G-F79DJ0VFGS',
-      // ),
-    );
+    await Firebase.initializeApp();
   }
 
   if (shouldUseFirebaseEmulator) {
@@ -53,7 +45,10 @@ Future<void> main() async {
           create: (context) => AuthProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => TripProvider()..getAllTrips(),
+          create: (context) => DistrictsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TripProvider()..onInit(),
         ),
         ChangeNotifierProvider(
           create: (context) => HotelProvider(),
@@ -67,6 +62,13 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => MessageProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => JoinTripProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ReviewProvider(),
+        ),
+
       ],
       child: const JustTravelApp(),
     ),

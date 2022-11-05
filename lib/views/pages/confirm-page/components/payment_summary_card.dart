@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/models/db-models/trip_model.dart';
+import 'package:just_travel/providers/join_trip_provider.dart';
 import 'package:just_travel/providers/trip_provider.dart';
 import 'package:just_travel/utils/constants/symbols.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,7 @@ class PaymentSummaryCard extends StatelessWidget {
                     ),
               ),
               trailing: Text(
-                '$currencySymbol${context.read<TripProvider>().totalCost}',
+                '$currencySymbol${context.read<JoinTripProvider>().totalCost}',
                 style: Theme.of(context).textTheme.headline6!.copyWith(
                       fontSize: 15,
                     ),

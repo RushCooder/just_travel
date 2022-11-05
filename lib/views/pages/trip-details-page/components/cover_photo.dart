@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_travel/views/widgets/network_image_loader.dart';
 
 import '../../../../utils/constants/urls.dart';
 
@@ -20,9 +21,8 @@ class CoverPhoto extends StatelessWidget {
           bottomLeft: Radius.circular(30),
           bottomRight: Radius.circular(30),
         ),
-        child: Image.network(
-          '${baseUrl}uploads/$imagePath',
-          fit: BoxFit.cover,
+        child: NetworkImageLoader(
+          image: '${baseUrl}uploads/$imagePath',
           width: MediaQuery.of(context).size.width,
           height: 300,
         ),

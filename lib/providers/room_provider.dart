@@ -13,6 +13,12 @@ class RoomProvider extends ChangeNotifier {
   String? selectedRoomStatusGroupValue;
   String? selectedRoomStatus;
   num numberOfTravellers = 1;
+  bool isRoomSelected = false;
+
+  void setRoomSelectedStatus(bool status) {
+    isRoomSelected = status;
+    notifyListeners();
+  }
 
   void setRoomStatus(String value) {
     selectedRoomStatusGroupValue = value;
@@ -26,6 +32,7 @@ class RoomProvider extends ChangeNotifier {
 
   void reset() {
     numberOfTravellers = 1;
+    isRoomSelected = false;
     selectedRoomStatusGroupValue = null;
     room = null;
     roomList = [];

@@ -12,12 +12,34 @@ import '../models/db-models/image_upload_model.dart';
 class HotelProvider extends ChangeNotifier {
   HotelModel? hotelModel;
 
+  List<HotelModel> hotelList = [];
+  List<HotelModel> hotelsByDistrict = [];
+
+  HotelModel? finalSelectedHotel;
+
+
   /*
   * hotel methods*/
-  reset() {
-    hotelModel = null;
+  // this will select hotel for booking
+  setFinalSelectedHotel(HotelModel value) {
+    finalSelectedHotel = value;
     notifyListeners();
   }
+
+
+  setHotel(HotelModel? value) {
+    hotelModel = value;
+    notifyListeners();
+  }
+
+  reset() {
+    hotelModel = null;
+    finalSelectedHotel = null;
+    hotelsByDistrict = [];
+
+    notifyListeners();
+  }
+
 
   /*
   *============================ Hotel api calling section ============================*/
@@ -26,5 +48,18 @@ class HotelProvider extends ChangeNotifier {
     hotelModel = await HotelApi.getHotelById(hotelId);
     notifyListeners();
     return hotelModel;
+  }
+
+
+  // get hotels by district
+  Future<List<HotelModel>?> getHotelsByDistrict(String district) async {
+    try {
+      hotelsByDistrict = await HotelApi.getHotelByDistrict(district);
+      notifyListeners();
+      return hotelsByDistrict;
+    } catch (e) {
+      print('Error: $e');
+      return null;
+    }
   }
 }

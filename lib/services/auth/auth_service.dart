@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
@@ -59,6 +60,18 @@ class AuthService {
     }
 
     // return AuthDB.isAdmin(userCredential.user!.uid);
+  }
+
+  // sending password reset email using forgotPassword
+  static Future<bool> forgotPassword(String email) async{
+    try{
+      await _auth.sendPasswordResetEmail(email: email);
+      return true;
+    } on FirebaseAuthException catch (e){
+      debugPrint('password reset email sending failed: $e');
+      return false;
+    }
+
   }
 
   // phone number verification

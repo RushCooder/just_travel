@@ -31,12 +31,13 @@ class CustomFormField extends StatelessWidget {
     return Consumer<AuthProvider>(
       builder: (context, authProvider, child) => TextFormField(
         controller: controller,
+        textCapitalization: TextCapitalization.sentences,
         maxLines: maxLine,
         keyboardType: textInputType,
         decoration: InputDecoration(
           hintText: hintText,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(5.0),
           ),
           filled: true,
           labelText: labelText,

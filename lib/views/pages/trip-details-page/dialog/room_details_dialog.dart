@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_travel/models/db-models/request_trip_model.dart';
 import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/models/db-models/trip_model.dart';
 import 'package:just_travel/providers/room_provider.dart';
@@ -103,7 +104,7 @@ roomDetailsDialog({
                       onPressed: () {
                         onSelectRoom(room!);
                         context
-                            .read<TripProvider>()
+                            .read<RoomProvider>()
                             .setRoomSelectedStatus(true);
                         int count = 0;
                         Navigator.popUntil(context, (route) {

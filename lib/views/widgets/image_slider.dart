@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:just_travel/views/widgets/network_image_loader.dart';
 
 import '../../utils/constants/urls.dart';
 
@@ -19,13 +20,18 @@ class ImageSlider extends StatelessWidget {
         int pageViewIndex,
       ) =>
           ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Image.network(
-            '${baseUrl}uploads/${photos[itemIndex]}',
-            fit: BoxFit.cover,
-            height: height,
-            width: MediaQuery.of(context).size.width,
-          ),
+        borderRadius: BorderRadius.circular(20),
+        child: NetworkImageLoader(
+          image: '${baseUrl}uploads/${photos[itemIndex]}',
+          height: height,
+          width: MediaQuery.of(context).size.width,
+        ),
+        // child: Image.network(
+        //   '${baseUrl}uploads/${photos[itemIndex]}',
+        //   fit: BoxFit.cover,
+        //   height: height,
+        //   width: MediaQuery.of(context).size.width,
+        // ),
       ),
       options: CarouselOptions(
         height: height,

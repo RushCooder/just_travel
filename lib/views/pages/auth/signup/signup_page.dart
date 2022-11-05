@@ -6,7 +6,7 @@ import 'package:just_travel/views/pages/auth/components/error_message_text.dart'
 import 'package:just_travel/views/pages/auth/components/google_signin_button.dart';
 import 'package:just_travel/views/pages/auth/components/or_bar_divider.dart';
 import 'package:just_travel/views/pages/auth/signup/components/already_user.dart';
-import 'package:just_travel/views/pages/auth/signup/components/dialog/contact_dialog.dart';
+import 'package:just_travel/views/pages/auth/signup/dialog/contact_dialog.dart';
 import 'package:just_travel/views/widgets/custom_form_field.dart';
 import 'package:just_travel/views/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';

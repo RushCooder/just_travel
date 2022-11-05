@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
 import 'package:just_travel/utils/helper_functions.dart';
+import 'package:just_travel/views/pages/auth/dialog/forgot_password_dialog.dart';
 import 'package:just_travel/views/pages/launcher_page.dart';
 import 'package:just_travel/views/widgets/custom_form_field.dart';
 import 'package:just_travel/views/widgets/loading_widget.dart';
@@ -75,7 +76,21 @@ class SignInPage extends StatelessWidget {
                     isPassword: true,
                   ),
                   const SizedBox(
-                    height: 35,
+                    height: 10,
+                  ),
+
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: TextButton(
+                      onPressed: () {
+                        forgotPasswordDialog(context: context);
+                      },
+                      child: Text('Forgot Password?'),
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 25,
                   ),
 
                   /*
@@ -94,14 +109,13 @@ class SignInPage extends StatelessWidget {
                             .authenticate(isSignUp: false)
                             .then(
                           (value) {
-                            if (value){
+                            if (value) {
                               print('Login success');
                               Navigator.pushNamedAndRemoveUntil(context,
                                   LauncherPage.routeName, (route) => false);
-                            }else{
+                            } else {
                               showMsg(context, 'Authentication Error');
                             }
-
                           },
                         ).onError(
                           (error, stackTrace) {

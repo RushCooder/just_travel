@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:just_travel/models/db-models/join_model.dart';
 import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/models/db-models/user_model.dart';
@@ -11,52 +10,100 @@ import '../models/db-models/image_upload_model.dart';
 import '../models/db-models/trip_model.dart';
 
 class TripProvider extends ChangeNotifier {
+  DateTime? tripStartDate, tripEndDate;
+  List<String> tripImageList = [];
+  ImageSource _imageSource = ImageSource.camera;
+  String? tripImagePath;
+  XFile? tripImageFile;
+
   List<TripModel> tripList = [];
   List<TripModel> myTripsList = [];
+  List<TripModel> hostTripList = [];
   TripModel? tripModel;
-  num? totalCost;
-  bool isRoomSelected = false;
-  bool isJoined = false;
 
-  void setRoomSelectedStatus(bool status) {
-    isRoomSelected = status;
-    notifyListeners();
+  // on init
+  void onInit(){
+    getAllTrips();
   }
 
   void reset() {
-    isRoomSelected = false;
-    totalCost = null;
+    tripImageList = [];
+    tripStartDate = null;
+    tripEndDate = null;
+    tripImagePath = null;
+    tripImageFile = null;
     notifyListeners();
   }
 
-  // calculating total cost
-  void costCalculate(TripModel trip, num numberOfTravellers, RoomModel? room) {
-    if (room == null) {
-      totalCost = trip.cost;
+  void setTripStartDate(DateTime? dateTime) {
+    tripStartDate = dateTime;
+    notifyListeners();
+  }
+
+  void setTripEndDate(DateTime? dateTime) {
+    tripEndDate = dateTime;
+    notifyListeners();
+  }
+
+  /*
+  * Image picking section start*/
+  Future<void> tripPickImage(bool isCamera, {required int index}) async {
+    if (isCamera) {
+      _imageSource = ImageSource.camera;
     } else {
-      totalCost = ((trip.cost! * numberOfTravellers) + room.price!);
+      _imageSource = ImageSource.gallery;
     }
-
-    notifyListeners();
+    tripImageFile =
+        await ImagePicker().pickImage(source: _imageSource, imageQuality: 50);
+    if (tripImageFile != null) {
+      try {
+        ImageUploadModel? uploadModel =
+            await ImageUploadApi.uploadImage(tripImageFile!.path);
+        if (index < 0) {
+          tripImageList.add(uploadModel!.image!);
+        } else {
+          tripImageList[index] = uploadModel!.image!;
+        }
+        print('images: ${tripImageList}');
+        notifyListeners();
+      } catch (e) {
+        print('trip provider -> image upload: $e');
+      }
+    }
   }
+  /*
+  * Image picking section end*/
 
   /* ========================== Insertion ====================== ***
   * */
-  // join trip
-  Future<void> joinTrip(TripModel trip, RoomModel room, UserModel user, num numberOfTravellers) async {
-    JoinModel joinModel = JoinModel(
-        tripId: trip.id,
-        roomId: room.id,
-        userId: user.id,
-        numberOfTravellers: numberOfTravellers,
-        status: 'Pending',
-        startDate: trip.startDate,
-        endDate: trip.endDate,
-        totalCost: totalCost);
-    print('trip join: $joinModel');
-    isJoined = await TripApi.joinTrip(joinModel);
-    notifyListeners();
+  // create request trip
+  Future<bool> requestTrip({
+    required String placeName,
+    required String district,
+    required String division,
+    required String description,
+    required String hotelId,
+    required String userId,
+    required num totalCost,
+    required num travellers,
+  }) async {
+    final TripModel tripModel = TripModel(
+      placeName: placeName,
+      description: description,
+      district: district,
+      division: division,
+      startDate: tripStartDate?.millisecondsSinceEpoch,
+      endDate: tripEndDate?.millisecondsSinceEpoch,
+      photos: tripImageList,
+      travellers: travellers,
+      cost: totalCost,
+      hotel: hotelId,
+      host: userId,
+      status: 'pending',
+    );
+    return await TripApi.createTrip(tripModel);
   }
+
 
 /*
   * ============= query ============*/
@@ -72,11 +119,23 @@ class TripProvider extends ChangeNotifier {
     }
   }
 
+  // get trips host
+  Future<List<TripModel>> getTripsByHost(String host) async {
+    try {
+      hostTripList = await TripApi.getTripsByHost(host);
+      notifyListeners();
+      return hostTripList;
+    } catch (e) {
+      print('Error: $e');
+      return hostTripList;
+    }
+  }
+
   // get trip by tripId
   Future<TripModel?> getTripByTripId(String tripId) async {
     tripModel = await TripApi.getTripByTripId(tripId);
     notifyListeners();
-    costCalculate(tripModel!, 1, null);
+    // costCalculate(tripModel!, 1, null);
     return tripModel;
   }
 

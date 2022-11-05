@@ -5,6 +5,7 @@ import 'package:just_travel/providers/user_provider.dart';
 import 'package:just_travel/views/pages/inbox-page/inbox_page.dart';
 import 'package:just_travel/views/pages/my-trips-page/my_trips_page.dart';
 import 'package:just_travel/views/pages/profile-page/profile_page.dart';
+import 'package:just_travel/views/pages/request-trip-page/request_trip_page.dart';
 import 'package:provider/provider.dart';
 
 class DrawerBody extends StatelessWidget {
@@ -43,6 +44,17 @@ class DrawerBody extends StatelessWidget {
           },
           leading: const Icon(Icons.message),
           title: const Text('Inbox'),
+          trailing: const Icon(Icons.arrow_forward_ios),
+        ),
+        ListTile(
+          onTap: () {
+            context.read<TripProvider>().getTripsByHost(
+              context.read<UserProvider>().user!.id!,
+            );
+            Navigator.pushNamed(context, RequestTripsPage.routeName);
+          },
+          leading: const Icon(Icons.tour),
+          title: const Text('Request Trip'),
           trailing: const Icon(Icons.arrow_forward_ios),
         ),
         ListTile(

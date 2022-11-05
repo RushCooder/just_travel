@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/hotel_provider.dart';
+import 'package:just_travel/providers/join_trip_provider.dart';
 import 'package:just_travel/providers/room_provider.dart';
 import 'package:just_travel/providers/trip_provider.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ class SuccessPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         context.read<TripProvider>().reset();
+        context.read<JoinTripProvider>().reset();
         context.read<RoomProvider>().reset();
         context.read<HotelProvider>().reset();
         int count = 0;
@@ -71,7 +73,7 @@ class SuccessPage extends StatelessWidget {
 
                   int count = 0;
                   Navigator.popUntil(context, (route) {
-                    return count++ == 4;
+                    return count++ == 3;
                   });
                 },
                 child: const Text(

@@ -4,13 +4,14 @@ class TripCard extends StatelessWidget {
   final String title;
   final String location;
   final String image;
-  final String date;
+  final String startDate, endDate;
 
   const TripCard({
     required this.title,
     required this.location,
     required this.image,
-    required this.date,
+    required this.startDate,
+    required this.endDate,
     Key? key,
   }) : super(key: key);
 
@@ -54,11 +55,25 @@ class TripCard extends StatelessWidget {
                   const SizedBox(
                     height: 3,
                   ),
-                  Text(
-                    date,
-                    style: Theme.of(context).textTheme.caption?.copyWith(
-                          color: Colors.black87,
+                  Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          startDate,
+                          style: Theme.of(context).textTheme.caption?.copyWith(
+                                color: Colors.black87,
+                              ),
                         ),
+                        Text(
+                          endDate,
+                          style: Theme.of(context).textTheme.caption?.copyWith(
+                                color: Colors.black87,
+                              ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

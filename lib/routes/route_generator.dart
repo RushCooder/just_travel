@@ -4,16 +4,18 @@ import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/models/db-models/trip_model.dart';
 import 'package:just_travel/views/pages/auth/signin/signin_page.dart';
 import 'package:just_travel/views/pages/auth/signup/signup_page.dart';
-import 'package:just_travel/views/pages/chat-page/chat_page.dart';
+import 'package:just_travel/views/pages/chat-page/chatting_page.dart';
 import 'package:just_travel/views/pages/confirm-page/confirm_page.dart';
 import 'package:just_travel/views/pages/error-page/error_page.dart';
 import 'package:just_travel/views/pages/error/default_error_page.dart';
 import 'package:just_travel/views/pages/home-page/home_page.dart';
 import 'package:just_travel/views/pages/inbox-page/inbox_page.dart';
-import 'package:just_travel/views/pages/inbox-page/inbox_page.dart';
 import 'package:just_travel/views/pages/launcher_page.dart';
 import 'package:just_travel/views/pages/my-trips-page/my_trips_page.dart';
 import 'package:just_travel/views/pages/profile-page/profile_page.dart';
+import 'package:just_travel/views/pages/request-trip-page/add-request-page/add_request_page.dart';
+import 'package:just_travel/views/pages/request-trip-page/host-trip-details-page/host-trip_details_page.dart';
+import 'package:just_travel/views/pages/request-trip-page/request_trip_page.dart';
 import 'package:just_travel/views/pages/success-page/success_page.dart';
 import 'package:just_travel/views/pages/trip-details-page/trip_details_page.dart';
 
@@ -92,6 +94,31 @@ class RouteGenerator {
 
       /*
     * ============= Trip route end ============*/
+
+      /*
+    * ============= Request trip route start ============*/
+      case AddRequestTripPage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => AddRequestTripPage(),
+        );
+
+      case RequestTripsPage.routeName:
+        return MaterialPageRoute(
+          builder: (context) => const RequestTripsPage(),
+        );
+
+        case HostTripDetailsPage.routeName:
+          {
+            String tripId = args as String;
+          return MaterialPageRoute(
+            builder: (context) => HostTripDetailsPage(
+              id: tripId,
+            ),
+          );
+        }
+
+      /*
+    * ============= Request trip route end ============*/
 
       /*
     * ============= My trip route start ============*/
