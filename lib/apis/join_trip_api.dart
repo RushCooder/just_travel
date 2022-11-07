@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:just_travel/models/db-models/payment_model.dart';
 import 'package:just_travel/models/db-models/user_model.dart';
 
 import '../models/db-models/join_model.dart';
@@ -8,10 +10,15 @@ import '../utils/constants/urls.dart';
 
 class JoinTripApi {
   // join trip
-  static Future<bool> joinTrip(JoinModel joinModel) async {
+  static Future<bool> joinTrip(
+      JoinModel joinModel, PaymentModel paymentModel) async {
     var headers = {'Content-Type': 'application/json'};
     var request = Request('POST', Uri.parse('${baseUrl}join/join'));
-    request.body = json.encode(joinModel.toJson());
+    var joinJson = {
+      'joinTrip': joinModel.toJson(),
+      'payment': paymentModel.toJson(),
+    };
+    request.body = json.encode(joinJson);
     request.headers.addAll(headers);
     try {
       StreamedResponse response = await request.send();
@@ -22,6 +29,28 @@ class JoinTripApi {
       } else {
         print(response.reasonPhrase);
         throw Error();
+      }
+    } catch (e) {
+      print('failed because: $e');
+      return false;
+    }
+  }
+
+  // cancel trip
+  static Future<bool> cancelTrip(String userId, String tripId) async {
+    var request = Request(
+      'PATCH',
+      Uri.parse('${baseUrl}join/cancel/$userId/$tripId'),
+    );
+
+    try {
+      StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        debugPrint(await response.stream.bytesToString());
+        return true;
+      } else {
+        throw response.reasonPhrase.toString();
       }
     } catch (e) {
       print('failed because: $e');
@@ -48,7 +77,7 @@ class JoinTripApi {
         // print('trip found');
         return {
           'users': users,
-          'numberOfTravellers' : numberOfTravelers,
+          'numberOfTravellers': numberOfTravelers,
         };
       } else {
         throw response.reasonPhrase.toString();
@@ -56,6 +85,31 @@ class JoinTripApi {
     } catch (e) {
       print('failed because: $e');
       return {};
+    }
+  }
+
+  // fetch join trip info by user id and trip id
+  static Future<JoinModel?> getJoinDetailsByUserAndTrip(
+    String userId,
+    String tripId,
+  ) async {
+    var request =
+        Request('GET', Uri.parse('${baseUrl}join/join/$userId/$tripId'));
+
+    try {
+      StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var encodedData = await response.stream.bytesToString();
+        var decodedData = jsonDecode(encodedData);
+        JoinModel joinModel = JoinModel.fromJson(decodedData);
+        return joinModel;
+      } else {
+        throw response.reasonPhrase.toString();
+      }
+    } catch (e) {
+      print('failed because: $e');
+      return null;
     }
   }
 

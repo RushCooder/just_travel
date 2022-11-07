@@ -76,11 +76,7 @@ class JoinModel {
     map['numberOfTravellers'] = numberOfTravellers;
     map['startDate'] = startDate;
     map['endDate'] = endDate;
-    map['status'] = status;
     map['totalCost'] = totalCost;
-    map['createdAt'] = createdAt;
-    map['updatedAt'] = updatedAt;
-    map['__v'] = v;
     return map;
   }
 }

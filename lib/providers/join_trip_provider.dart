@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/apis/join_trip_api.dart';
 import 'package:just_travel/apis/trip_api.dart';
+import 'package:just_travel/models/db-models/payment_model.dart';
 
 import '../models/db-models/join_model.dart';
 import '../models/db-models/room_model.dart';
@@ -34,20 +35,30 @@ class JoinTripProvider extends ChangeNotifier {
    =============================== DB query =========================
   * */
   // join trip
-  Future<void> joinTrip(TripModel trip, RoomModel room, UserModel user,
-      num numberOfTravellers) async {
+  Future<void> joinTrip({
+    required TripModel trip,
+    required RoomModel room,
+    required UserModel user,
+    required num numberOfTravellers,
+    required PaymentModel paymentModel,
+  }) async {
     JoinModel joinModel = JoinModel(
-        tripId: trip.id,
-        roomId: room.id,
-        userId: user.id,
-        numberOfTravellers: numberOfTravellers,
-        status: 'Pending',
-        startDate: trip.startDate,
-        endDate: trip.endDate,
-        totalCost: totalCost);
+      tripId: trip.id,
+      roomId: room.id,
+      userId: user.id,
+      numberOfTravellers: numberOfTravellers,
+      startDate: trip.startDate,
+      endDate: trip.endDate,
+      totalCost: totalCost,
+    );
     print('trip join: $joinModel');
-    isJoined = await JoinTripApi.joinTrip(joinModel);
+    isJoined = await JoinTripApi.joinTrip(joinModel, paymentModel);
     notifyListeners();
+  }
+
+  // cancel trip
+  Future<bool> cancelTrip(String userId, String tripId) async{
+      return await JoinTripApi.cancelTrip(userId, tripId);
   }
 
   // fetch users in a trip by trip id
@@ -60,7 +71,16 @@ class JoinTripProvider extends ChangeNotifier {
     }
   }
 
+  // count users in a trip by trip id
   Future<num> countUsersInTrip(String tripId) async {
     return await JoinTripApi.countUsersInTrip(tripId);
+  }
+
+  // fetch join trip info by user id and trip id
+  Future<JoinModel?> getJoinDetailsByUserAndTrip(
+    String userId,
+    String tripId,
+  ) async {
+    return await JoinTripApi.getJoinDetailsByUserAndTrip(userId, tripId);
   }
 }

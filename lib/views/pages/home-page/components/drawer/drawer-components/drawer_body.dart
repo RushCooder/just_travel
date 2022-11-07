@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sslcommerz/model/SSLCSdkType.dart';
+import 'package:flutter_sslcommerz/model/SSLCommerzInitialization.dart';
+import 'package:flutter_sslcommerz/model/SSLCurrencyType.dart';
+import 'package:flutter_sslcommerz/model/sslproductinitilizer/NonPhysicalGoods.dart';
+import 'package:flutter_sslcommerz/model/sslproductinitilizer/SSLCProductInitializer.dart';
+import 'package:flutter_sslcommerz/sslcommerz.dart';
 import 'package:just_travel/providers/message_provider.dart';
 import 'package:just_travel/providers/trip_provider.dart';
 import 'package:just_travel/providers/user_provider.dart';
@@ -26,9 +32,9 @@ class DrawerBody extends StatelessWidget {
         ),
         ListTile(
           onTap: () {
-            context.read<TripProvider>().getTripByUserId(
-                context.read<UserProvider>().user!.id!
-            );
+            context
+                .read<TripProvider>()
+                .getTripByUserId(context.read<UserProvider>().user!.id!);
             Navigator.pushNamed(context, MyTripsPage.routeName);
           },
           leading: const Icon(Icons.card_travel),
@@ -38,8 +44,7 @@ class DrawerBody extends StatelessWidget {
         ListTile(
           onTap: () {
             context.read<MessageProvider>().getMessageGroupsByUserId(
-                context.read<UserProvider>().user!.id!
-            );
+                context.read<UserProvider>().user!.id!);
             Navigator.pushNamed(context, InboxPage.routeName);
           },
           leading: const Icon(Icons.message),
@@ -49,8 +54,8 @@ class DrawerBody extends StatelessWidget {
         ListTile(
           onTap: () {
             context.read<TripProvider>().getTripsByHost(
-              context.read<UserProvider>().user!.id!,
-            );
+                  context.read<UserProvider>().user!.id!,
+                );
             Navigator.pushNamed(context, RequestTripsPage.routeName);
           },
           leading: const Icon(Icons.tour),
@@ -58,7 +63,8 @@ class DrawerBody extends StatelessWidget {
           trailing: const Icon(Icons.arrow_forward_ios),
         ),
         ListTile(
-          onTap: () {},
+          onTap: () {
+          },
           leading: const Icon(Icons.notifications),
           title: const Text('Notifications'),
           trailing: const Icon(Icons.arrow_forward_ios),

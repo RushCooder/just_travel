@@ -9,6 +9,7 @@ import 'package:just_travel/providers/districts_provider.dart';
 import 'package:just_travel/providers/hotel_provider.dart';
 import 'package:just_travel/providers/join_trip_provider.dart';
 import 'package:just_travel/providers/message_provider.dart';
+import 'package:just_travel/providers/payment_provider.dart';
 import 'package:just_travel/providers/review_provider.dart';
 import 'package:just_travel/providers/room_provider.dart';
 import 'package:just_travel/providers/trip_provider.dart';
@@ -67,6 +68,9 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => ReviewProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PaymentProvider(),
         ),
 
       ],

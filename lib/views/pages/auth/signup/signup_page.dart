@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
+import 'package:just_travel/providers/districts_provider.dart';
 import 'package:just_travel/views/pages/auth/components/auth_button.dart';
 import 'package:just_travel/views/pages/auth/components/error_message_text.dart';
 import 'package:just_travel/views/pages/auth/components/google_signin_button.dart';
@@ -92,6 +93,7 @@ class SignUpPage extends StatelessWidget {
                     controller: emailTextEditingController,
                     icon: Icons.email,
                     labelText: 'Email Address',
+                    isEmail: true,
                   ),
                   const SizedBox(
                     height: 15,
@@ -136,6 +138,7 @@ class SignUpPage extends StatelessWidget {
                                 await authProvider.authenticate(isSignUp: true);
                             if (isSuccess) {
                               await authProvider.deleteUser();
+                              context.read<DistrictsProvider>().getAllDivision();
                               Navigator.pop(context);
                               contactDialog(context);
                             }else{

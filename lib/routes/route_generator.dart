@@ -107,9 +107,9 @@ class RouteGenerator {
           builder: (context) => const RequestTripsPage(),
         );
 
-        case HostTripDetailsPage.routeName:
-          {
-            String tripId = args as String;
+      case HostTripDetailsPage.routeName:
+        {
+          String tripId = args as String;
           return MaterialPageRoute(
             builder: (context) => HostTripDetailsPage(
               id: tripId,

@@ -87,12 +87,24 @@ void contactDialog(BuildContext context) {
                   height: 30,
                 ),
                 //current city
-                DivisionDropDown(),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: const FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: DivisionDropDown(),
+                  ),
+                ),
                 const SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 // current division
-                DistrictDropDown(),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: const FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: DistrictDropDown(),
+                  ),
+                ),
               ],
             ),
           ),

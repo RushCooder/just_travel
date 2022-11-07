@@ -81,7 +81,7 @@ class RoomApi {
       return null;
     }
   }
-
+  // fetch room by hotel id, status and capacity
   static Future<List<RoomModel>> getRoomsByHotelIdStatusCapacity(String hotelId, String status, num  capacity) async {
     var request = Request('GET', Uri.parse('${baseUrl}rooms/multi/$hotelId/$status/$capacity'));
 

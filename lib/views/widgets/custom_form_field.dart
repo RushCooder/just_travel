@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_travel/utils/email_validation.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/auth_provider.dart';
@@ -13,6 +14,7 @@ class CustomFormField extends StatelessWidget {
   final String labelText;
   VoidCallback? onEditingComplete;
   String? hintText;
+  bool isEmail;
   CustomFormField({
     required this.controller,
     this.icon,
@@ -21,6 +23,7 @@ class CustomFormField extends StatelessWidget {
     this.isPassword = false,
     this.isPrefIcon = true,
     this.hintText,
+    this.isEmail = false,
     this.textInputType = TextInputType.text,
     this.maxLine = 1,
     Key? key,
@@ -53,6 +56,11 @@ class CustomFormField extends StatelessWidget {
         ),
         obscureText: isPassword ? authProvider.isObscure : false,
         validator: (value) {
+          if (isEmail) {
+            if (!emailValidation(value!)) {
+              return 'Please use a valid Email';
+            }
+          }
           if (value == null || value.isEmpty) {
             return 'This field must not be empty';
           }
