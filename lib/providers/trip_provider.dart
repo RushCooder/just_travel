@@ -37,6 +37,11 @@ class TripProvider extends ChangeNotifier {
 
   void setTripStartDate(DateTime? dateTime) {
     tripStartDate = dateTime;
+    if (tripEndDate != null) {
+      if (tripStartDate?.compareTo(tripEndDate!) != -1) {
+        tripEndDate = null;
+      }
+    }
     notifyListeners();
   }
 

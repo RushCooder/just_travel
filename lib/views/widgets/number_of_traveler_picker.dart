@@ -4,7 +4,8 @@ import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 
 class NumberOfTravelerPicker extends StatelessWidget {
-  const NumberOfTravelerPicker({Key? key}) : super(key: key);
+  int maxValue;
+  NumberOfTravelerPicker({this.maxValue = 5, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class NumberOfTravelerPicker extends StatelessWidget {
             builder: (context, roomProvider, child) => NumberPicker(
               value: roomProvider.numberOfTravellers.toInt(),
               minValue: 1,
-              maxValue: 100,
+              maxValue: maxValue,
               itemCount: 2,
               itemHeight: 30,
               onChanged: (value) {

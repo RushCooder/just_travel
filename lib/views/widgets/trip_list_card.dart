@@ -26,8 +26,8 @@ class TripListCard extends StatelessWidget {
       onTap: onPressed,
       onLongPress: onLongPress,
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        // elevation: 5,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTile(

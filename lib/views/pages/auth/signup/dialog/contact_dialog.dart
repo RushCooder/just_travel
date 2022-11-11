@@ -16,8 +16,6 @@ import '../../../../../providers/districts_provider.dart';
 
 void contactDialog(BuildContext context) {
   final mobileNumberTextEditingController = TextEditingController();
-  final cityTextEditingController = TextEditingController();
-  final divisionTextEditingController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -86,6 +84,84 @@ void contactDialog(BuildContext context) {
                 const SizedBox(
                   height: 30,
                 ),
+
+                // date of birth
+                Row(
+                  children: [
+                    const Text('Date of Birth'),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        DateTime? dateTime = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime(2005),
+                          firstDate: DateTime(1950),
+                          lastDate: DateTime.now(),
+                        );
+                        if (dateTime != null) {
+                          context
+                              .read<AuthProvider>()
+                              .setDob(dateTime.millisecondsSinceEpoch);
+                        }
+                      },
+                      child: Consumer<AuthProvider>(
+                        builder: (context, authPro, child) => Text(
+                          authPro.dob == null
+                              ? 'Select Date'
+                              : getFormattedDateTime(
+                                  dateTime: authPro.dob!,
+                                  pattern: 'MMM dd yyyy',
+                                ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(
+                  height: 5,
+                ),
+                // gender section
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Gender'),
+                    Row(
+                      children: [
+                        Consumer<AuthProvider>(
+                          builder: (context, authPro, child) =>
+                              Radio<String>(
+                            value: 'male',
+                            groupValue: authPro.genderGroupValue,
+                            onChanged: (value) {
+                              authPro.setGenderGroupValue(value!);
+                            },
+                          ),
+                        ),
+                        const Text('Male'),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Consumer<AuthProvider>(
+                          builder: (context, authPro, child) =>
+                              Radio<String>(
+                            value: 'female',
+                            groupValue: authPro.genderGroupValue,
+                            onChanged: (value) {
+                              authPro.setGenderGroupValue(value!);
+                            },
+                          ),
+                        ),
+                        const Text('Female'),
+                      ],
+                    ),
+                  ],
+                ),
+
                 //current city
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
@@ -114,22 +190,43 @@ void contactDialog(BuildContext context) {
         ElevatedButton(
           onPressed: () {
             if (formKey.currentState!.validate() &&
-                context.read<UserProvider>().userImagePath != null) {
-              final disProvider = context.read<DistrictsProvider>();
-              context.read<AuthProvider>().setContactInfo(
-                    imagePath: context.read<UserProvider>().userImagePath!,
-                    mobileNumber: mobileNumberTextEditingController.text.trim(),
-                    division: disProvider.division!.division!,
-                    district: disProvider.district!.district!,
-                  );
+                context.read<UserProvider>().userImagePath != null &&
+                context.read<AuthProvider>().dob != null &&
+                context.read<AuthProvider>().genderGroupValue != null) {
+
 
               showLoadingDialog(context);
-              otpDialog(context, mobileNumberTextEditingController.text.trim());
-              disProvider.reset();
+              RegExp pattern = RegExp(r'(^(\+88)?(01){1}[3456789]{1}(\d){8})$');
+              if (pattern
+                  .hasMatch(mobileNumberTextEditingController.text.trim())) {
+                final disProvider = context.read<DistrictsProvider>();
+                context.read<AuthProvider>().setContactInfo(
+                  imagePath: context.read<UserProvider>().userImagePath!,
+                  mobileNumber: mobileNumberTextEditingController.text.trim(),
+                  division: disProvider.division!.division!,
+                  district: disProvider.district!.district!,
+                );
+                otpDialog(
+                    context, mobileNumberTextEditingController.text.trim());
+                disProvider.reset();
+              } else {
+                showMsg(context, 'Please enter mobile number');
+              }
             } else {
-              showMsg(context, 'Please upload image');
+              showMsg(context, 'Empty data can not be submitted');
             }
           },
+
+          // onPressed: () {
+          //   RegExp pattern = RegExp(r'(^(\+88)?(01){1}[3456789]{1}(\d){8})$');
+          //   if (pattern
+          //       .hasMatch(mobileNumberTextEditingController.text.trim())) {
+          //     showMsg(context, 'Perfect');
+          //   } else {
+          //     // ignore: use_build_context_synchronously
+          //     showMsg(context, 'Please enter mobile number');
+          //   }
+          // },
           child: const Text('Next'),
         ),
       ],

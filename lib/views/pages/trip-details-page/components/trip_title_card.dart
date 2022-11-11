@@ -26,9 +26,14 @@ class TripTitleCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    trip!.placeName!.toUpperCase(),
-                    style: Theme.of(context).textTheme.headline6,
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.5,
+                    ),
+                    child: Text(
+                      trip!.placeName!.toUpperCase(),
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
                   const SizedBox(
                     height: 5,
@@ -43,11 +48,13 @@ class TripTitleCard extends StatelessWidget {
                       const SizedBox(
                         width: 3,
                       ),
-                      Text(trip.district!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption
-                              ?.copyWith(fontSize: 14)),
+                      Text(
+                        '${trip.district}, ${trip.division}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption
+                            ?.copyWith(fontSize: 14),
+                      ),
                     ],
                   ),
                 ],

@@ -28,6 +28,7 @@ class TripCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(18),
             child: Image.network(
               image,
+              width: MediaQuery.of(context).size.width * 0.5,
               height: 300,
               fit: BoxFit.cover,
             ),
@@ -58,19 +59,27 @@ class TripCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          startDate,
-                          style: Theme.of(context).textTheme.caption?.copyWith(
-                                color: Colors.black87,
-                              ),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            startDate,
+                            style: Theme.of(context).textTheme.caption?.copyWith(
+                                  color: Colors.black87,
+                                ),
+                          ),
                         ),
-                        Text(
-                          endDate,
-                          style: Theme.of(context).textTheme.caption?.copyWith(
-                                color: Colors.black87,
-                              ),
+                        Expanded(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              endDate,
+                              style: Theme.of(context).textTheme.caption?.copyWith(
+                                    color: Colors.black87,
+                                  ),
+                            ),
+                          ),
                         ),
                       ],
                     ),

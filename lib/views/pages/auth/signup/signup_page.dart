@@ -138,10 +138,12 @@ class SignUpPage extends StatelessWidget {
                                 await authProvider.authenticate(isSignUp: true);
                             if (isSuccess) {
                               await authProvider.deleteUser();
-                              context.read<DistrictsProvider>().getAllDivision();
+                              context
+                                  .read<DistrictsProvider>()
+                                  .getAllDivision();
                               Navigator.pop(context);
                               contactDialog(context);
-                            }else{
+                            } else {
                               Navigator.pop(context);
                             }
                           } else {
@@ -156,6 +158,12 @@ class SignUpPage extends StatelessWidget {
                       }
                     },
                   ),
+
+                  // AuthButton(buttonName: 'SIGN UP', onPressed: () {
+                  //   context.read<DistrictsProvider>().getAllDivision();
+                  //   contactDialog(context);
+                  // },),
+
                   const SizedBox(
                     height: 30,
                   ),

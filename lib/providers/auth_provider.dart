@@ -19,10 +19,23 @@ class AuthProvider extends ChangeNotifier {
   bool? ensureEmailVerified;
   String? vId;
 
+  String? genderGroupValue;
+  num? dob;
+
   // change visibility of password
   void changeVisibility() {
     isVisible = !isVisible;
     isObscure = !isObscure;
+    notifyListeners();
+  }
+
+  void setGenderGroupValue(String value) {
+    genderGroupValue = value;
+    notifyListeners();
+  }
+
+  void setDob(num dateTime){
+    dob = dateTime;
     notifyListeners();
   }
 
@@ -241,6 +254,8 @@ class AuthProvider extends ChangeNotifier {
           number: mobileNumber,
           isVerified: isMobileVerified,
         ),
+        dob: dob,
+        gender: genderGroupValue,
         district: district,
         division: division,
         profileImage: imagePath,

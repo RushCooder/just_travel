@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:just_travel/models/db-models/request_trip_model.dart';
 import 'package:just_travel/models/db-models/room_model.dart';
 import 'package:just_travel/models/db-models/trip_model.dart';
 import 'package:just_travel/providers/room_provider.dart';
@@ -7,7 +6,6 @@ import 'package:just_travel/utils/helper_functions.dart';
 import 'package:just_travel/views/pages/trip-details-page/dialog/show_rooms_dialog.dart';
 import 'package:just_travel/views/widgets/loading_widget.dart';
 import 'package:just_travel/views/widgets/number_of_traveler_picker.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 
 roomSelectionDialog({
@@ -26,7 +24,7 @@ roomSelectionDialog({
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const NumberOfTravelerPicker(),
+            NumberOfTravelerPicker(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

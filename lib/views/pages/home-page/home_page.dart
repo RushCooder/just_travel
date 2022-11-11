@@ -21,8 +21,7 @@ class HomePage extends StatelessWidget {
     context.read<UserProvider>().fetchUserByEmail(AuthService.user!.email!);
 
     return RefreshIndicator(
-
-      onRefresh: () async{
+      onRefresh: () async {
         context.read<TripProvider>().onInit();
         context.read<UserProvider>().fetchUserByEmail(AuthService.user!.email!);
       },
@@ -54,10 +53,14 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     )
-                  : ProfileCircularImage(
-                      radius: 30,
-                      image:
-                          '${baseUrl}uploads/${context.read<UserProvider>().user!.profileImage}',
+                  : Consumer<UserProvider>(
+                      builder: (context, usrProvider, child) {
+                        return ProfileCircularImage(
+                          radius: 30,
+                          image:
+                              '${baseUrl}uploads/${usrProvider.user!.profileImage}',
+                        );
+                      },
                     ),
             ),
           ],

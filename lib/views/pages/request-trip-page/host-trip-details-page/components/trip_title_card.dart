@@ -26,9 +26,14 @@ class TripTitleCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    trip!.placeName!.toUpperCase(),
-                    style: Theme.of(context).textTheme.headline6,
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.4,
+                    ),
+                    child: Text(
+                      trip!.placeName!.toUpperCase(),
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
                   const SizedBox(
                     height: 5,
@@ -43,17 +48,19 @@ class TripTitleCard extends StatelessWidget {
                       const SizedBox(
                         width: 3,
                       ),
-                      Text(trip.district!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption
-                              ?.copyWith(fontSize: 14)),
+                      Text(
+                        '${trip.district}, ${trip.division}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption
+                            ?.copyWith(fontSize: 14),
+                      ),
                     ],
                   ),
                 ],
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                     'Scheduled',
@@ -78,6 +85,17 @@ class TripTitleCard extends StatelessWidget {
                       Text(
                         getFormattedDateTime(
                             dateTime: trip.startDate!, pattern: 'MMM dd, yyyy'),
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption
+                            ?.copyWith(fontSize: 12),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        getFormattedDateTime(
+                            dateTime: trip.endDate!, pattern: 'MMM dd, yyyy'),
                         style: Theme.of(context)
                             .textTheme
                             .caption

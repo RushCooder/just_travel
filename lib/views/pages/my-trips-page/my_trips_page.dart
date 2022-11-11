@@ -25,20 +25,6 @@ class MyTripsPage extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           children: [
-            // app bar
-            // Row(
-            //   children: [
-            //     BackButtonCustom(
-            //       onBack: () {
-            //         Navigator.pop(context);
-            //       },
-            //     ),
-            //     Text(
-            //       'My Trips',
-            //       style: Theme.of(context).textTheme.headline6,
-            //     ),
-            //   ],
-            // ),
 
             Consumer<TripProvider>(
               builder: (context, provider, child) {

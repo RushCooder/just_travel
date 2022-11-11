@@ -15,6 +15,7 @@ class CustomFormField extends StatelessWidget {
   VoidCallback? onEditingComplete;
   String? hintText;
   bool isEmail;
+  int? maxLength;
   CustomFormField({
     required this.controller,
     this.icon,
@@ -26,6 +27,7 @@ class CustomFormField extends StatelessWidget {
     this.isEmail = false,
     this.textInputType = TextInputType.text,
     this.maxLine = 1,
+    this.maxLength,
     Key? key,
   }) : super(key: key);
 
@@ -36,6 +38,7 @@ class CustomFormField extends StatelessWidget {
         controller: controller,
         textCapitalization: TextCapitalization.sentences,
         maxLines: maxLine,
+        maxLength: maxLength,
         keyboardType: textInputType,
         decoration: InputDecoration(
           hintText: hintText,

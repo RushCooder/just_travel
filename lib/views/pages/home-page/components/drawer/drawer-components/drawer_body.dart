@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sslcommerz/model/SSLCSdkType.dart';
-import 'package:flutter_sslcommerz/model/SSLCommerzInitialization.dart';
-import 'package:flutter_sslcommerz/model/SSLCurrencyType.dart';
-import 'package:flutter_sslcommerz/model/sslproductinitilizer/NonPhysicalGoods.dart';
-import 'package:flutter_sslcommerz/model/sslproductinitilizer/SSLCProductInitializer.dart';
-import 'package:flutter_sslcommerz/sslcommerz.dart';
 import 'package:just_travel/providers/message_provider.dart';
 import 'package:just_travel/providers/trip_provider.dart';
 import 'package:just_travel/providers/user_provider.dart';
@@ -62,13 +56,13 @@ class DrawerBody extends StatelessWidget {
           title: const Text('Request Trip'),
           trailing: const Icon(Icons.arrow_forward_ios),
         ),
-        ListTile(
-          onTap: () {
-          },
-          leading: const Icon(Icons.notifications),
-          title: const Text('Notifications'),
-          trailing: const Icon(Icons.arrow_forward_ios),
-        ),
+        // ListTile(
+        //   onTap: () {
+        //   },
+        //   leading: const Icon(Icons.notifications),
+        //   title: const Text('Notifications'),
+        //   trailing: const Icon(Icons.arrow_forward_ios),
+        // ),
       ],
     );
   }

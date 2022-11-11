@@ -54,56 +54,54 @@ class ChattingPage extends StatelessWidget {
             // message reading part
             Expanded(
               child: Consumer<MessageProvider>(
-                builder: (
-                  context,
-                  msgProvider,
-                  child,
-                ) =>
-                    GroupedListView<MessageModel, DateTime>(
-                  padding: const EdgeInsets.all(8.0),
-                  useStickyGroupSeparators: true,
-                  floatingHeader: true,
-                  reverse: true,
-                  order: GroupedListOrder.DESC,
+                builder: (context, msgProvider, child) {
+                  return GroupedListView<MessageModel, DateTime>(
+                    padding: const EdgeInsets.all(8.0),
+                    useStickyGroupSeparators: true,
+                    floatingHeader: true,
+                    reverse: true,
+                    order: GroupedListOrder.DESC,
 
-                  elements: msgProvider.messageList,
-                  groupBy: (message) => DateTime.fromMillisecondsSinceEpoch(
-                    message.sendDateTime!.toInt(),
-                  ),
-                  groupHeaderBuilder: (MessageModel message) => const SizedBox(
-                      // height: 40,
-                      // child: Center(
-                      //   child: Card(
-                      //     color: Theme.of(context).primaryColor,
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.all(8.0),
-                      //       child: Text(
-                      //         DateFormat.yMMMd().format(
-                      //           DateTime.fromMillisecondsSinceEpoch(
-                      //             message.sendDateTime!.toInt(),
-                      //           ),
-                      //         ),
-                      //         style: Theme.of(context).textTheme.caption!.copyWith(
-                      //           color: Colors.white,
-                      //         )
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      ), // optio
-                  itemBuilder: (context, MessageModel message) => Align(
-                    alignment: message.sender!.id ==
-                            context.read<UserProvider>().user!.id
-                        ? Alignment.centerRight
-                        : Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: MyMessageSide(
-                        messageModel: message,
-                      ),
+                    elements: msgProvider.messageList,
+                    groupBy: (message) => DateTime.fromMillisecondsSinceEpoch(
+                      message.sendDateTime!.toInt(),
                     ),
-                  ), // nal
-                ),
+                    groupHeaderBuilder: (MessageModel message) => const SizedBox(
+                        // height: 40,
+                        // child: Center(
+                        //   child: Card(
+                        //     color: Theme.of(context).primaryColor,
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.all(8.0),
+                        //       child: Text(
+                        //         DateFormat.yMMMd().format(
+                        //           DateTime.fromMillisecondsSinceEpoch(
+                        //             message.sendDateTime!.toInt(),
+                        //           ),
+                        //         ),
+                        //         style: Theme.of(context).textTheme.caption!.copyWith(
+                        //           color: Colors.white,
+                        //         )
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        ),
+                    // optio
+                    itemBuilder: (context, MessageModel message) => Align(
+                      alignment: message.sender!.id ==
+                              context.read<UserProvider>().user!.id
+                          ? Alignment.centerRight
+                          : Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: MyMessageSide(
+                          messageModel: message,
+                        ),
+                      ),
+                    ), // nal
+                  );
+                },
               ),
             ),
 

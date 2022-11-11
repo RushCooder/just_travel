@@ -70,6 +70,7 @@ class AddRequestTripPage extends StatelessWidget {
                 controller: placeNameTextController,
                 isPrefIcon: false,
                 labelText: 'Place Name',
+                maxLength: 50,
               ),
               const SizedBox(
                 height: 10,
@@ -96,10 +97,10 @@ class AddRequestTripPage extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     flex: 2,
                     child: FittedBox(
-                        fit: BoxFit.scaleDown, child: NumberOfTravelerPicker()),
+                        fit: BoxFit.scaleDown, child: NumberOfTravelerPicker(maxValue: 31,)),
                   ),
                   const SizedBox(
                     width: 5,
@@ -151,6 +152,7 @@ class AddRequestTripPage extends StatelessWidget {
                 isPrefIcon: false,
                 maxLine: 3,
                 labelText: 'Description',
+                maxLength: 300,
               ),
 
               const SizedBox(

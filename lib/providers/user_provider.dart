@@ -14,10 +14,24 @@ class UserProvider extends ChangeNotifier {
   ImageSource _imageSource = ImageSource.camera;
   String? userImagePath;
   XFile? userImageFile;
+  String? genderGroupValue;
+  DateTime? dob;
 
   void reset() {
     userImagePath = null;
     userImageFile = null;
+    genderGroupValue = null;
+    dob = null;
+  }
+
+  void setGenderGroupValue(String value) {
+    genderGroupValue = value;
+    notifyListeners();
+  }
+
+  void setDob(DateTime dateTime){
+    dob = dateTime;
+    notifyListeners();
   }
 
   Future<ImageUploadModel?> userPickImage(bool isCamera) async {
@@ -52,6 +66,10 @@ class UserProvider extends ChangeNotifier {
   // fetch user by email
   Future<void> fetchUserByEmail(String email) async {
     user = await UserApi.fetchUserByEmail(email);
+    if (user != null) {
+      genderGroupValue = user!.gender;
+    }
+
     notifyListeners();
   }
 
@@ -65,6 +83,4 @@ class UserProvider extends ChangeNotifier {
     user = await UserApi.updateUser(map, userId);
     notifyListeners();
   }
-
-
 }

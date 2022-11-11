@@ -26,7 +26,7 @@ roomSelectionDialog({
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const NumberOfTravelerPicker(),
+            NumberOfTravelerPicker(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
