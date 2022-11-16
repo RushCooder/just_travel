@@ -69,7 +69,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void resetAllData() {
+  void reset() {
     name = null;
     email = null;
     password = null;
@@ -77,6 +77,9 @@ class AuthProvider extends ChangeNotifier {
     mobileNumber = null;
     district = null;
     division = null;
+    genderGroupValue = null;
+    dob = null;
+    notifyListeners();
   }
 
   // set email from email field
@@ -147,23 +150,23 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  // signing in user
-  Future<void> _signIn() async {
-    try {
-      bool isSuccess = await AuthService.signIn(email!, password!);
-      if (isSuccess) {
-        return;
-      }
-    } on FirebaseAuthException catch (e) {
-      rethrow;
-    }
-  } //
+  // // signing in user
+  // Future<void> _signIn() async {
+  //   try {
+  //     bool isSuccess = await AuthService.signIn(email!, password!);
+  //     if (isSuccess) {
+  //       return;
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     rethrow;
+  //   }
+  // } //
 
-  //resend verification email
-  Future<void> reSendVerificationEmail() async {
-    await AuthService.emailVerification();
-    signOut();
-  }
+  // //resend verification email
+  // Future<void> reSendVerificationEmail() async {
+  //   await AuthService.emailVerification();
+  //   signOut();
+  // }
 
   // SignUp user with email verification
   Future<bool> emailVerification() async {
@@ -241,7 +244,6 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> storeInDataBase() async {
     UserModel? registeredUser = await UserApi.fetchUserByEmail(email!);
-    // print('registered user: ${registeredUser?.name}');
     UserModel? createdUser;
     if (registeredUser == null) {
       UserModel newUser = UserModel(

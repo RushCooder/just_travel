@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/user_provider.dart';
+import 'package:just_travel/views/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/hotel_provider.dart';
@@ -15,10 +16,14 @@ userImagePickerDialog(BuildContext context, {int index = -1}) {
           Expanded(
             child: GestureDetector(
               onTap: () {
+                showLoadingDialog(context);
                 Provider.of<UserProvider>(context, listen: false)
                     .userPickImage(true)
                     .then(
-                      (value) => Navigator.pop(context),
+                      (value) {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
                     );
               },
               child: Column(
@@ -39,10 +44,14 @@ userImagePickerDialog(BuildContext context, {int index = -1}) {
           Expanded(
             child: GestureDetector(
               onTap: () {
+                showLoadingDialog(context);
                 Provider.of<UserProvider>(context, listen: false)
                     .userPickImage(false)
                     .then(
-                      (value) => Navigator.pop(context),
+                      (value)  {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
                     );
               },
               child: Column(

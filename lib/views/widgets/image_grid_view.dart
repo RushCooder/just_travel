@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:just_travel/models/db-models/trip_model.dart';
 import 'package:just_travel/views/widgets/network_image_loader.dart';
 import '../../utils/constants/urls.dart';
 

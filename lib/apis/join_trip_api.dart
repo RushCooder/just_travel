@@ -38,10 +38,7 @@ class JoinTripApi {
 
   // cancel trip
   static Future<bool> cancelTrip(String userId, String tripId) async {
-    var request = Request(
-      'PATCH',
-      Uri.parse('${baseUrl}join/cancel/$userId/$tripId'),
-    );
+    var request = Request('PATCH', Uri.parse('${baseUrl}join/cancel/$userId/$tripId'));
 
     try {
       StreamedResponse response = await request.send();
@@ -53,7 +50,7 @@ class JoinTripApi {
         throw response.reasonPhrase.toString();
       }
     } catch (e) {
-      print('failed because: $e');
+      print('trip cancel failed: $e');
       return false;
     }
   }
@@ -70,7 +67,7 @@ class JoinTripApi {
         var encodedData = await response.stream.bytesToString();
         var decodedData = jsonDecode(encodedData);
         List<UserModel> users = List.generate(decodedData.length,
-            (index) => UserModel.fromJson(decodedData[0]['userId']));
+            (index) => UserModel.fromJson(decodedData[index]['userId']));
 
         List<num> numberOfTravelers = List.generate(decodedData.length,
             (index) => decodedData[index]['numberOfTravellers']);

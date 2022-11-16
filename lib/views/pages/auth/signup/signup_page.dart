@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
 import 'package:just_travel/providers/districts_provider.dart';
+import 'package:just_travel/providers/user_provider.dart';
 import 'package:just_travel/views/pages/auth/components/auth_button.dart';
 import 'package:just_travel/views/pages/auth/components/error_message_text.dart';
 import 'package:just_travel/views/pages/auth/components/google_signin_button.dart';
@@ -28,6 +29,8 @@ class SignUpPage extends StatelessWidget {
   bool setAuthentication(BuildContext context) {
     if (passwordTextEditingController.text ==
         confirmPasswordTextEditingController.text) {
+      context.read<AuthProvider>().reset();
+      context.read<UserProvider>().reset();
       // set sign up info
       context.read<AuthProvider>().setSignUpInfo(
             nameTextEditingController.text.trim(),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,6 +8,18 @@ class AuthService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   // this function will return current user information
   static User? get user => _auth.currentUser;
+
+  static const String collectionAdmin = 'admins';
+  static final FirebaseFirestore _firebaseFirestore =
+      FirebaseFirestore.instance;
+
+  // this method will check the uid with admins collection from firebase firestore
+  // then will return true or false
+  static Future<bool> isAdmin(String uid) async {
+    DocumentSnapshot snapshot =
+    await _firebaseFirestore.collection(collectionAdmin).doc(uid).get();
+    return snapshot.exists;
+  }
 
   // delete user
   static Future<bool> deleteUser() async {
@@ -18,6 +31,7 @@ class AuthService {
       return false;
     }
   }
+
 
   // reload user
   static Future<void> get reload => _auth.currentUser!.reload();
@@ -38,7 +52,7 @@ class AuthService {
         password: password,
       );
       print('credential: $userCredential');
-      return userCredential.user != null;
+      return await AuthService.isAdmin(userCredential.user!.uid) == false;
     } catch (error) {
       print(error);
       return false;

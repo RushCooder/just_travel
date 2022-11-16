@@ -18,7 +18,12 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<UserProvider>().fetchUserByEmail(AuthService.user!.email!);
+    Future.delayed(
+      Duration.zero,
+      () {
+        context.read<UserProvider>().fetchUserByEmail(AuthService.user!.email!);
+      },
+    );
 
     return RefreshIndicator(
       onRefresh: () async {

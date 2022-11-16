@@ -60,7 +60,7 @@ class HotelApi {
       HotelModel hotel = HotelModel.fromJson(data);
       return hotel;
     } else {
-      print(response.reasonPhrase);
+      print('hotel by hotelID: ${response.reasonPhrase}');
       return null;
     }
   }

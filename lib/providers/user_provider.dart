@@ -8,20 +8,17 @@ import '../models/db-models/image_upload_model.dart';
 
 class UserProvider extends ChangeNotifier {
   UserModel? user;
-
-/*
-  * Image picking section start*/
   ImageSource _imageSource = ImageSource.camera;
   String? userImagePath;
   XFile? userImageFile;
   String? genderGroupValue;
   DateTime? dob;
-
   void reset() {
     userImagePath = null;
     userImageFile = null;
     genderGroupValue = null;
     dob = null;
+    notifyListeners();
   }
 
   void setGenderGroupValue(String value) {
@@ -34,6 +31,8 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+/*
+  * Image picking section start*/
   Future<ImageUploadModel?> userPickImage(bool isCamera) async {
     if (isCamera) {
       _imageSource = ImageSource.camera;

@@ -51,7 +51,6 @@ class JoinTripProvider extends ChangeNotifier {
       endDate: trip.endDate,
       totalCost: totalCost,
     );
-    print('trip join: $joinModel');
     isJoined = await JoinTripApi.joinTrip(joinModel, paymentModel);
     notifyListeners();
   }
@@ -67,8 +66,11 @@ class JoinTripProvider extends ChangeNotifier {
     if (map.isNotEmpty) {
       joinedUserList = map['users'];
       numberOfTravelerList = map['numberOfTravellers'];
-      notifyListeners();
+    }else{
+      numberOfTravelerList = [];
+      joinedUserList = [];
     }
+    notifyListeners();
   }
 
   // count users in a trip by trip id

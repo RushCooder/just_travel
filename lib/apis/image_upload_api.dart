@@ -10,7 +10,7 @@ class ImageUploadApi {
 
     try {
       var request =
-          http.MultipartRequest('POST', Uri.parse('${baseUrl}image/upload'));
+      http.MultipartRequest('POST', Uri.parse('${baseUrl}image/upload'));
       request.files.add(await http.MultipartFile.fromPath('myFile', imagePath));
       request.headers.addAll(headers);
       print('image uploading');

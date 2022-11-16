@@ -39,12 +39,10 @@ class MessageApi {
         var encodedData = await response.stream.bytesToString();
         var decodedData = jsonDecode(encodedData);
 
-        print('decoded: $decodedData');
         List<MessageGroupModel> messageGroups = List.generate(
           decodedData.length,
           (index) => MessageGroupModel.fromJson(decodedData[index]),
         );
-        print('listed: $messageGroups');
         return messageGroups;
       }
       throw response.reasonPhrase.toString();

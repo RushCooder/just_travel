@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:just_travel/providers/auth_provider.dart';
+import 'package:just_travel/providers/districts_provider.dart';
 import 'package:just_travel/utils/helper_functions.dart';
 import 'package:just_travel/views/pages/launcher_page.dart';
 import 'package:just_travel/views/widgets/loading_widget.dart';
@@ -57,20 +58,24 @@ void showOtpDialog(BuildContext context, String vId) {
               showLoadingDialog(context);
               bool otpVerified =
                   await provider.matchingSmsCode(vId, codeController.text);
+              print('otp verified: $otpVerified');
               if (otpVerified) {
                 // await authProvider.deleteUser();
                 bool isAuth = await provider.authenticate(isSignUp: true);
+                print('auth: $isAuth');
                 if (isAuth) {
                   // if (await provider.emailVerification()){
-                  try{
+                  try {
                     await provider.storeInDataBase();
+                    context.read<DistrictsProvider>().reset();
+                    print('stored db');
                     Navigator.pushNamedAndRemoveUntil(
                         context, LauncherPage.routeName, (route) => false);
-                  }catch(e){
+                  } catch (e) {
                     showMsg(context, e.toString());
+                    Navigator.pop(context);
+                    Navigator.pop(context);
                   }
-
-
 
                   // }
                 }
@@ -80,6 +85,7 @@ void showOtpDialog(BuildContext context, String vId) {
               }
             } catch (error) {
               print('otpDialog error: $error');
+              Navigator.pop(context);
             }
           },
           onChanged: (value) {

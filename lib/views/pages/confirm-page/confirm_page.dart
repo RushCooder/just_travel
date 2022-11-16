@@ -11,6 +11,7 @@ import 'package:just_travel/providers/join_trip_provider.dart';
 import 'package:just_travel/providers/payment_provider.dart';
 import 'package:just_travel/providers/trip_provider.dart';
 import 'package:just_travel/providers/user_provider.dart';
+import 'package:just_travel/utils/email_verification.dart';
 import 'package:just_travel/utils/helper_functions.dart';
 import 'package:just_travel/utils/payment_methods.dart';
 import 'package:just_travel/views/pages/confirm-page/components/booking_details_card.dart';
@@ -75,6 +76,8 @@ class ConfirmPage extends StatelessWidget {
 
                   if (user.email?.isVerified == false) {
                     showMsg(context, 'Please verify your email');
+                    emailVerification(context);
+
                   } else {
                     String? phoneNumber = await paymentNumberDialog(context);
 

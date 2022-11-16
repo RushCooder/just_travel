@@ -87,7 +87,7 @@ class TripApi {
       TripModel trip = TripModel.fromJson(data);
       return trip;
     } else {
-      print(response.reasonPhrase);
+      print('trip by trip id: ${response.reasonPhrase}');
       return null;
     }
   }

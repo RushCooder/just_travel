@@ -21,6 +21,8 @@ class TripProvider extends ChangeNotifier {
   List<TripModel> hostTripList = [];
   TripModel? tripModel;
 
+  bool isLoading = false;
+
   // on init
   void onInit(){
     getAllTrips();
@@ -115,11 +117,16 @@ class TripProvider extends ChangeNotifier {
   // get all trips
   Future<List<TripModel>> getAllTrips() async {
     try {
+      isLoading = true;
+      notifyListeners();
       tripList = await TripApi.getAllTrips();
+      isLoading = false;
       notifyListeners();
       return tripList;
     } catch (e) {
       print('Error: $e');
+      isLoading = false;
+      notifyListeners();
       return tripList;
     }
   }

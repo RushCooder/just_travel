@@ -115,25 +115,26 @@ class TripDetailsPage extends StatelessWidget {
                       // JOIN Card
                       CheckUserTrip(
                         onTrue: Consumer<RoomProvider>(
-                            builder: (context, provider, child) {
-                          return JoinCard(
-                            tripModel: trip,
-                            roomModel: roomModel,
-                            onJoin: provider.isRoomSelected
-                                ? () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      ConfirmPage.routeName,
-                                      arguments: [
-                                        trip,
-                                        roomModel!,
-                                        numberOfTravellers
-                                      ],
-                                    );
-                                  }
-                                : null,
-                          );
-                        }),
+                          builder: (context, provider, child) {
+                            return JoinCard(
+                              tripModel: trip,
+                              roomModel: roomModel,
+                              onJoin: provider.isRoomSelected
+                                  ? () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        ConfirmPage.routeName,
+                                        arguments: [
+                                          trip,
+                                          roomModel!,
+                                          numberOfTravellers
+                                        ],
+                                      );
+                                    }
+                                  : null,
+                            );
+                          },
+                        ),
                       ),
 
                       // package review

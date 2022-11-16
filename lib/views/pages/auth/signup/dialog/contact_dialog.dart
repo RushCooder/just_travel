@@ -3,6 +3,7 @@ import 'package:just_travel/providers/auth_provider.dart';
 import 'package:just_travel/providers/user_provider.dart';
 import 'package:just_travel/utils/constants/urls.dart';
 import 'package:just_travel/utils/helper_functions.dart';
+import 'package:just_travel/utils/mobile_number_operations.dart';
 import 'package:just_travel/views/pages/auth/signup/components/district_dropdown.dart';
 import 'package:just_travel/views/pages/auth/signup/components/division_dropdown.dart';
 import 'package:just_travel/views/pages/auth/signup/dialog/otpp_dialog.dart';
@@ -132,8 +133,7 @@ void contactDialog(BuildContext context) {
                     Row(
                       children: [
                         Consumer<AuthProvider>(
-                          builder: (context, authPro, child) =>
-                              Radio<String>(
+                          builder: (context, authPro, child) => Radio<String>(
                             value: 'male',
                             groupValue: authPro.genderGroupValue,
                             onChanged: (value) {
@@ -147,8 +147,7 @@ void contactDialog(BuildContext context) {
                     Row(
                       children: [
                         Consumer<AuthProvider>(
-                          builder: (context, authPro, child) =>
-                              Radio<String>(
+                          builder: (context, authPro, child) => Radio<String>(
                             value: 'female',
                             groupValue: authPro.genderGroupValue,
                             onChanged: (value) {
@@ -193,22 +192,27 @@ void contactDialog(BuildContext context) {
                 context.read<UserProvider>().userImagePath != null &&
                 context.read<AuthProvider>().dob != null &&
                 context.read<AuthProvider>().genderGroupValue != null) {
-
-
               showLoadingDialog(context);
-              RegExp pattern = RegExp(r'(^(\+88)?(01){1}[3456789]{1}(\d){8})$');
-              if (pattern
-                  .hasMatch(mobileNumberTextEditingController.text.trim())) {
+              // RegExp pattern = RegExp(r'(^(\+88)?(01){1}[3456789]{1}(\d){8})$');
+              //
+              // // if ()
+
+              if (validateMobileNumber(
+                  mobileNumberTextEditingController.text.trim())) {
+                mobileNumberTextEditingController.text = formatMobileNumber(
+                    mobileNumberTextEditingController.text.trim());
+
                 final disProvider = context.read<DistrictsProvider>();
                 context.read<AuthProvider>().setContactInfo(
-                  imagePath: context.read<UserProvider>().userImagePath!,
-                  mobileNumber: mobileNumberTextEditingController.text.trim(),
-                  division: disProvider.division!.division!,
-                  district: disProvider.district!.district!,
-                );
+                      imagePath: context.read<UserProvider>().userImagePath!,
+                      mobileNumber:
+                          mobileNumberTextEditingController.text.trim(),
+                      division: disProvider.division!.division!,
+                      district: disProvider.district!.district!,
+                    );
                 otpDialog(
                     context, mobileNumberTextEditingController.text.trim());
-                disProvider.reset();
+                // disProvider.reset();
               } else {
                 showMsg(context, 'Please enter mobile number');
               }

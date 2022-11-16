@@ -26,9 +26,11 @@ class UpComingTrip extends StatelessWidget {
           builder: (context, tripProvider, child) {
             // print('trips: ${tripProvider.tripList}');
             return tripProvider.tripList.isEmpty
-                ? const Center(
-                    child: Text('There is no trip'),
-                  )
+                ? tripProvider.isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : const Center(
+                        child: Text('There is no trip'),
+                      )
                 : GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),

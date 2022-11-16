@@ -25,7 +25,6 @@ class MyTripsPage extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           children: [
-
             Consumer<TripProvider>(
               builder: (context, provider, child) {
                 final myTripList = provider.myTripsList;
@@ -45,32 +44,35 @@ class MyTripsPage extends StatelessWidget {
                                 arguments: myTripList[index].id);
                           },
                           onLongPress: () async {
-
-                            try{
-                              final joinTripProvider = context.read<JoinTripProvider>();
+                            try {
+                              final joinTripProvider =
+                                  context.read<JoinTripProvider>();
                               final userProvider = context.read<UserProvider>();
-                              bool isOk = (await showCancelTripDialog(context)) ?? false;
-                              if (isOk){
-                               bool isCanceled = await joinTripProvider.cancelTrip(userProvider.user!.id!, provider.tripList[index].id!);
+                              bool isOk =
+                                  (await showCancelTripDialog(context)) ??
+                                      false;
+                              if (isOk) {
+                                bool isCanceled =
+                                    await joinTripProvider.cancelTrip(
+                                        userProvider.user!.id!,
+                                        myTripList[index].id!,);
 
-                               if (isCanceled){
-                                 showCancelDetailsDialog(context);
-                                 await provider.getTripByUserId(userProvider.user!.id!);
+                                print('cancel: $isCanceled');
 
-                               }
-
-
+                                if (isCanceled) {
+                                  showCancelDetailsDialog(context);
+                                  await provider
+                                      .getTripByUserId(userProvider.user!.id!);
+                                }else{
+                                  throw Error();
+                                }
                               }
-                            }catch(error){
+                            } catch (error) {
                               debugPrint('error canceling trip: $error');
                               showMsg(context, 'Failed to canceled');
                             }
-
-
-
                           },
                         ),
-
                       );
               },
             ),
