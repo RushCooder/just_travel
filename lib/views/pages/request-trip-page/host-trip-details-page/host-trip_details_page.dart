@@ -15,6 +15,7 @@ import '../../../../providers/room_provider.dart';
 import '../../../../providers/trip_provider.dart';
 import '../../../widgets/expandable_text_widget.dart';
 import '../../../widgets/image_grid_view.dart';
+import 'components/review.dart';
 
 // ignore: must_be_immutable
 class HostTripDetailsPage extends StatelessWidget {
@@ -108,10 +109,15 @@ class HostTripDetailsPage extends StatelessWidget {
                         tripModel: trip,
                         roomModel: roomModel,
                         onShowTravelers: () {
-                          context.read<JoinTripProvider>().getUsersByTripId(trip.id!);
-                            showTravelersDialog(context: context);
+                          context
+                              .read<JoinTripProvider>()
+                              .getUsersByTripId(trip.id!);
+                          showTravelersDialog(context: context);
                         },
                       ),
+
+                      // package review
+                      Review(tripId: trip.id!),
                     ],
                   );
                 } else if (snapshot.hasError) {

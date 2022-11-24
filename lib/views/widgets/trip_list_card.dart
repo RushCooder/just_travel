@@ -39,26 +39,28 @@ class TripListCard extends StatelessWidget {
             ),
             title: Text(trip.placeName!),
             subtitle: Text(
-              getFormattedDateTime(dateTime: trip.startDate!),
+              '${getFormattedDateTime(dateTime: trip.startDate!, pattern: 'MMM dd')} - ${getFormattedDateTime(dateTime: trip.endDate!, pattern: 'MMM dd, yyyy')}',
             ),
             trailing: isMyTrip
                 ? SizedBox(
                     height: 50,
                     width: 70,
-                    child: FutureBuilder(
-                      future: context
-                          .read<JoinTripProvider>()
-                          .getJoinDetailsByUserAndTrip(
-                              context.read<UserProvider>().user!.id!, trip.id!),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Text('${snapshot.data!.status}');
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      },
+                    child: Center(
+                      child: FutureBuilder(
+                        future: context
+                            .read<JoinTripProvider>()
+                            .getJoinDetailsByUserAndTrip(
+                                context.read<UserProvider>().user!.id!, trip.id!),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Text('${snapshot.data!.status}');
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      ),
                     ),
                   )
                 : null,

@@ -6,7 +6,7 @@ Future<bool?> showCancelTripDialog(BuildContext context) async{
     // false = user must tap button, true = tap outside dialog
     builder: (context) {
       return AlertDialog(
-        title: const Text('Delete'),
+        title: const Text('Cancel'),
         content: const Text('Do you want to cancel this trip?'),
         actions: [
           TextButton(

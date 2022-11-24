@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'package:just_travel/models/db-models/message_group_model.dart';
 import 'package:just_travel/models/db-models/message_model.dart';
 import 'package:just_travel/models/db-models/send_message_model.dart';
+import 'package:just_travel/models/db-models/user_model.dart';
 import 'package:just_travel/utils/constants/urls.dart';
 
 class MessageApi {
@@ -77,4 +78,29 @@ class MessageApi {
       return [];
     }
   }
+
+  // fetch all users in group by group id
+  static Future<List<UserModel>> fetchUsersByGroupId(
+      String messageGroupId) async {
+    var request = Request(
+        'GET', Uri.parse('${baseUrl}message_group/group/users/$messageGroupId'));
+    try {
+      StreamedResponse response = await request.send();
+      if (response.statusCode == 200) {
+        var encodedData = await response.stream.bytesToString();
+        var decodedData = jsonDecode(encodedData);
+
+        List<UserModel> usersInGroup = List.generate(
+          decodedData['members'].length,
+              (index) => UserModel.fromJson(decodedData['members'][index]),
+        );
+        return usersInGroup;
+      }
+      throw response.reasonPhrase.toString();
+    } catch (e) {
+      print('failed because: $e');
+      return [];
+    }
+  }
+
 }

@@ -5,10 +5,12 @@ import 'package:just_travel/apis/message_api.dart';
 import 'package:just_travel/models/db-models/message_group_model.dart';
 import 'package:just_travel/models/db-models/message_model.dart';
 import 'package:just_travel/models/db-models/send_message_model.dart';
+import 'package:just_travel/models/db-models/user_model.dart';
 
 class MessageProvider extends ChangeNotifier {
   List<MessageGroupModel> messageGroupList = [];
   List<MessageModel> messageList = [];
+  List<UserModel> userList = [];
 
   Timer? _timer;
 
@@ -63,6 +65,12 @@ class MessageProvider extends ChangeNotifier {
   // fetching all messages by group id
   getAllMessagesByGroupId(String groupId) async {
     messageList = await MessageApi.getMessagesByGroupId(groupId);
+    notifyListeners();
+  }
+
+  // fetch all users in group by group id
+  Future<void> fetchUsersByGroupId(String messageGroupId) async {
+    userList = await MessageApi.fetchUsersByGroupId(messageGroupId);
     notifyListeners();
   }
 }

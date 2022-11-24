@@ -5,6 +5,7 @@ import 'package:just_travel/models/db-models/message_group_model.dart';
 import 'package:just_travel/models/db-models/message_model.dart';
 import 'package:just_travel/providers/message_provider.dart';
 import 'package:just_travel/providers/user_provider.dart';
+import 'package:just_travel/views/pages/chat-page/users-info-page/users_info_page.dart';
 import 'package:just_travel/views/pages/home-page/components/app_bar_trailing.dart';
 import 'package:just_travel/views/widgets/custom_form_field.dart';
 import 'package:just_travel/views/widgets/profile_circular_image.dart';
@@ -30,6 +31,14 @@ class ChattingPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(messageGroup.groupName!),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, UserInfoPage.routeName, arguments: messageGroup.id);
+              },
+              icon: const Icon(Icons.info_outline),
+            ),
+          ],
         ),
         body: Column(
           children: [

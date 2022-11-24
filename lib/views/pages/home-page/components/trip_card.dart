@@ -46,7 +46,7 @@ class TripCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    title,
+                    title.toUpperCase(),
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                   const SizedBox(

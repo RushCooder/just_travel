@@ -28,57 +28,53 @@ class RequestTripsPage extends StatelessWidget {
                 )
               : ListView.builder(
                   itemCount: tripProvider.hostTripList.length,
-                  itemBuilder: (context, index) => ListTile(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                         HostTripDetailsPage.routeName,
-                        arguments: tripProvider.hostTripList[index].id,
-                      );
-                      // Navigator.pushNamed(
-                      //     context, RequestedTripDetailsPage.routeName,
-                      //     arguments: tripProvider.hostTripList[index].id);
-                    },
-                    leading: SizedBox(
-                      width: 50,
-                      height: 100,
-                      child: tripProvider.hostTripList[index].photos == null
-                          ? Image.asset(
-                              'images/img.png',
-                              width: 50,
-                              height: 100,
-                            )
-                          : NetworkImageLoader(
-                              image:
-                                  '${baseUrl}uploads/${tripProvider.hostTripList[index].photos![0]}',
-                              width: 50,
-                              height: 100,
-                            ),
-                    ),
-                    title: Text(
-                      tripProvider.hostTripList[index].placeName!,
-                    ),
-                    subtitle: Row(
-                      children: [
-                        Text(
-                          getFormattedDateTime(
-                            dateTime:
-                                tripProvider.hostTripList[index].startDate!,
+                  itemBuilder: (context, index) => Card(
+                    child: ListTile(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          HostTripDetailsPage.routeName,
+                          arguments: tripProvider.hostTripList[index].id,
+                        );
+                      },
+                      leading: SizedBox(
+                        height: 200,
+                        width: 100,
+                        child: tripProvider.hostTripList[index].photos == null
+                            ? Image.asset(
+                                'images/img.png',
+                                height: 200,
+                                width: 100,
+                              )
+                            : NetworkImageLoader(
+                                image:
+                                    '${baseUrl}uploads/${tripProvider.hostTripList[index].photos![0]}',
+                                width: 50,
+                                height: 100,
+                              ),
+                      ),
+                      title: Text(
+                        tripProvider.hostTripList[index].placeName!
+                            .toUpperCase(),
+                      ),
+                      subtitle: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            'Joined Travelers: ${tripProvider.hostTripList[index].joinedPersons}',
                           ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Text('To'),
-                        ),
-                        Text(
-                          getFormattedDateTime(
-                            dateTime: tripProvider.hostTripList[index].endDate!,
+                          const SizedBox(
+                            height: 2,
                           ),
-                        ),
-                      ],
-                    ),
-                    trailing: Text(
-                      tripProvider.hostTripList[index].status!,
+                          Text(
+                            '${getFormattedDateTime(dateTime: tripProvider.hostTripList[index].startDate!, pattern: 'MMM dd')} - ${getFormattedDateTime(dateTime: tripProvider.hostTripList[index].endDate!, pattern: 'MMM dd, yyyy')}',
+                          ),
+                        ],
+                      ),
+                      trailing: Text(
+                        tripProvider.hostTripList[index].status!,
+                      ),
                     ),
                   ),
                 );

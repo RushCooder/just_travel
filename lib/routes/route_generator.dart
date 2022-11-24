@@ -5,6 +5,7 @@ import 'package:just_travel/models/db-models/trip_model.dart';
 import 'package:just_travel/views/pages/auth/signin/signin_page.dart';
 import 'package:just_travel/views/pages/auth/signup/signup_page.dart';
 import 'package:just_travel/views/pages/chat-page/chatting_page.dart';
+import 'package:just_travel/views/pages/chat-page/users-info-page/users_info_page.dart';
 import 'package:just_travel/views/pages/confirm-page/confirm_page.dart';
 import 'package:just_travel/views/pages/error-page/error_page.dart';
 import 'package:just_travel/views/pages/error/default_error_page.dart';
@@ -146,6 +147,11 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) => const InboxPage(),
         );
+
+      case  UserInfoPage.routeName:
+        {
+          return MaterialPageRoute(builder: (context) => UserInfoPage(groupId: args as String),);
+        }
 
       /*
     * ============= Message route start ============*/

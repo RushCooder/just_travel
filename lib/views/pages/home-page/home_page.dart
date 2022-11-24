@@ -6,6 +6,7 @@ import 'package:just_travel/views/pages/home-page/components/drawer_button.dart'
 import 'package:just_travel/views/pages/home-page/components/upcoming_trip.dart';
 import 'package:just_travel/views/pages/profile-page/profile_page.dart';
 import 'package:just_travel/views/widgets/appbar_layout.dart';
+import 'package:just_travel/views/widgets/circular_image_layout.dart';
 import 'package:just_travel/views/widgets/profile_circular_image.dart';
 import 'package:provider/provider.dart';
 import '../../../services/auth/auth_service.dart';
@@ -44,47 +45,52 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, ProfilePage.routeName);
               },
-              child: context.read<UserProvider>().user!.profileImage == null
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        radius: 30,
-                        child: Text(
-                          context
-                              .read<UserProvider>()
-                              .user!
-                              .name!
-                              .substring(0, 2),
-                        ),
-                      ),
-                    )
-                  : Consumer<UserProvider>(
-                      builder: (context, usrProvider, child) {
-                        return ProfileCircularImage(
-                          radius: 30,
-                          image:
-                              '${baseUrl}uploads/${usrProvider.user!.profileImage}',
-                        );
-                      },
-                    ),
+              child: SizedBox(
+                height: 60,
+                width: 60,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Consumer<UserProvider>(
+                    builder: (context, usrProvider, child) {
+                      return usrProvider.user!.profileImage == null
+                          ? CircleAvatar(
+                              radius: 50,
+                              child: Text(
+                                context
+                                    .read<UserProvider>()
+                                    .user!
+                                    .name!
+                                    .substring(0, 2),
+                              ),
+                            )
+                          : CircularImageLayout(
+                              height: 40,
+                              width: 40,
+                              image:
+                                  '${baseUrl}uploads/${usrProvider.user!.profileImage}',
+                            );
+                    },
+                  ),
+                ),
+              ),
             ),
           ],
         ),
         body: SafeArea(
           child: ListView(
-            children: [
+            children: const [
               //Appbar
               // const CustomAppBar(),
               // const SizedBox(
               //   height: 15,
               // ),
               //Search options
-              const SizedBox(
+              SizedBox(
                 height: 30,
               ),
-              const SearchBar(),
+              SearchBar(),
 
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
               //popular trip text
@@ -119,10 +125,10 @@ class HomePage extends StatelessWidget {
               //   ),
               // ),
 
-              const SizedBox(
+              SizedBox(
                 height: 7,
               ),
-              const UpComingTrip(),
+              UpComingTrip(),
             ],
           ),
         ),
